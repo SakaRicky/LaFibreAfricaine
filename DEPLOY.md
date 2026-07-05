@@ -29,25 +29,36 @@ Avec `CLOUDINARY_URL` configurée, toutes les photos (catalogue + téléversemen
 sont hébergées et servies par le CDN Cloudinary, avec optimisation automatique
 (WebP/AVIF). Rien à faire de plus.
 
-Après le premier seed, envoyer les photos du catalogue vers Cloudinary (une seule fois) :
-
-```bash
-railway run --service <nom-du-service-web> npm run media:cloudinary --prefix backend
-```
+Après le premier seed, envoyer les photos du catalogue vers Cloudinary (une seule fois — voir §4 pour la méthode).
 
 (Sans Cloudinary, l'app retombe sur le disque local `backend/media` — il faudrait alors
 un volume monté sur `/app/backend/media/uploads`, mais Cloudinary est la voie recommandée.)
 
 ## 4. Première mise en service
 
-Le script de démarrage exécute `prisma db push` automatiquement (crée les tables).
-Pour charger le catalogue + le compte admin initial, une seule fois :
+Le script de démarrage exécute `prisma db push` automatiquement (crée les tables, vides).
+Pour charger le catalogue + le compte admin initial, une seule fois, **dans le conteneur** :
 
 ```bash
-railway run --service <nom-du-service-web> npm run db:seed --prefix backend
+brew install railway        # ou : npm i -g @railway/cli
+railway login
+railway link                # choisir projet → environnement → service web
+railway ssh                 # ouvre un shell DANS le conteneur déployé
+
+# une fois dans /app :
+npm run db:seed --prefix backend
+npm run media:cloudinary --prefix backend
+exit
 ```
 
-Puis se connecter sur `https://<domaine>/admin` avec `sakaricky91@gmail.com` / `LaFibre-2026!`
+⚠️ Ne pas utiliser `railway run …` : il exécute la commande sur votre machine, où
+l'URL privée de Postgres (`postgres.railway.internal`) n'est pas joignable.
+
+Alternative sans CLI : copier `DATABASE_PUBLIC_URL` (service Postgres → Variables)
+et lancer localement `DATABASE_URL="<url publique>" npm run db:seed --prefix backend`
+(puis la même chose avec `media:cloudinary`).
+
+Ensuite, se connecter sur `https://<domaine>/admin` avec `sakaricky91@gmail.com` / `LaFibre-2026!`
 et **changer le mot de passe immédiatement** (Mon compte).
 
 ## 5. Courriels (avant le domaine)
