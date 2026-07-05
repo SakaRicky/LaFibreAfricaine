@@ -58,7 +58,8 @@
     "company": "Our Company",
     "crafted": "Crafted in Cameroon",
     "based": "Based in Montréal, QC",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "admin": "Admin"
   },
   "shop": {
     "title": "All Products",

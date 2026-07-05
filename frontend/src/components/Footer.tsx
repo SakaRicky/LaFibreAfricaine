@@ -62,6 +62,8 @@ export default function Footer() {
 
       <div className="border-t border-ivory/10 py-5 text-center text-[12px] tracking-[0.14em] text-ivory/50">
         © {new Date().getFullYear()} La Fibre Africaine. {t("footer.rights")} — {t("hero.eyebrow")} {t("hero.title")}
+        <span className="mx-2">·</span>
+        <Link to="/admin" className="transition-colors hover:text-gold">{t("footer.admin")}</Link>
       </div>
     </footer>
   );

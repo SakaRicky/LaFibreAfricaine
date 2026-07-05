@@ -58,7 +58,8 @@
     "company": "La maison",
     "crafted": "Fait main au Cameroun",
     "based": "Basée à Montréal, QC",
-    "rights": "Tous droits réservés."
+    "rights": "Tous droits réservés.",
+    "admin": "Administration"
   },
   "shop": {
     "title": "Tous les produits",
