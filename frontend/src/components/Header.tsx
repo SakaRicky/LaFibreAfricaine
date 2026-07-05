@@ -17,6 +17,17 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock page scroll and allow Escape while the mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    if (open) window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   const nav = [
     { to: "/shop", label: t("nav.shopAll") },
     { to: "/shop/matching-sets", label: t("nav.matchingSets") },
@@ -91,29 +102,62 @@ export default function Header() {
               className="p-1 text-forest lg:hidden"
               onClick={() => setOpen((v) => !v)}
               aria-label={t("nav.menu")}
+              aria-expanded={open}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+              <svg
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+                className={`h-6 w-6 transition-transform duration-300 ease-out ${open ? "rotate-90" : ""}`}
+              >
                 {open ? <path d="M5 5l14 14M19 5L5 19" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
               </svg>
             </button>
           </div>
         </div>
+      </div>
 
-        {open && (
-          <nav className="border-t border-charcoal/10 bg-ivory px-6 py-4 lg:hidden">
-            {nav.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === "/shop"}
-                onClick={() => setOpen(false)}
-                className="block py-2.5 text-[13px] font-medium uppercase tracking-[0.16em] text-charcoal hover:text-gold"
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
-        )}
+      {/* Mobile menu — overlay panel, never pushes the page */}
+      <div className={`fixed inset-0 z-[-1] lg:hidden ${open ? "" : "pointer-events-none"}`} aria-hidden={!open}>
+        <div
+          onClick={() => setOpen(false)}
+          className={`absolute inset-0 bg-charcoal/40 backdrop-blur-[2px] transition-opacity duration-300 ${
+            open ? "opacity-100" : "opacity-0"
+          }`}
+        />
+        <nav
+          className={`absolute inset-y-0 left-0 flex w-full max-w-sm flex-col bg-ivory px-8 pt-36 pb-10 shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            open ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          {nav.map((item, i) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === "/shop"}
+              onClick={() => setOpen(false)}
+              style={{ transitionDelay: open ? `${140 + i * 60}ms` : "0ms" }}
+              className={({ isActive }) =>
+                `block py-3 font-display text-3xl font-semibold transition-all duration-500 ease-out ${
+                  open ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+                } ${isActive ? "text-gold" : "text-forest hover:text-gold"}`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+          <div
+            style={{ transitionDelay: open ? `${140 + nav.length * 60 + 80}ms` : "0ms" }}
+            className={`mt-auto border-t border-charcoal/10 pt-6 transition-all duration-500 ${
+              open ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+            }`}
+          >
+            <p className="font-display text-lg font-medium italic text-gold">
+              {t("hero.eyebrow")} — {t("hero.title")}
+            </p>
+            <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-charcoal/50">
+              La Fibre Africaine · Montréal
+            </p>
+          </div>
+        </nav>
       </div>
     </header>
   );
