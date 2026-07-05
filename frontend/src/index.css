@@ -1,0 +1,126 @@
+@import "@fontsource/cormorant-garamond/500.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/cormorant-garamond/700.css";
+@import "@fontsource/cormorant-garamond/500-italic.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #183a2d;
+  --color-forest-light: #234d3c;
+  --color-ivory: #f8f6f1;
+  --color-gold: #b88a2a;
+  --color-sand: #d9c7a1;
+  --color-terracotta: #b5643c;
+  --color-charcoal: #2e2e2e;
+  --color-bronze: #8d6b4f;
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-ivory text-charcoal font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-forest;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--color-gold) 30%, transparent);
+  }
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 px-7 py-3 text-[13px] font-medium uppercase tracking-[0.18em] transition-colors duration-200 cursor-pointer;
+}
+
+@layer components {
+  .btn-primary {
+    @apply btn bg-forest text-ivory hover:bg-forest-light;
+  }
+  .btn-gold {
+    @apply btn bg-gold text-white hover:bg-bronze;
+  }
+  .btn-outline-dark {
+    @apply btn border border-forest text-forest hover:bg-forest hover:text-ivory;
+  }
+  .btn-outline-light {
+    @apply btn border border-ivory/80 text-ivory hover:bg-ivory hover:text-forest;
+  }
+  .eyebrow {
+    @apply text-[12px] font-medium uppercase tracking-[0.3em] text-gold;
+  }
+  .field {
+    @apply w-full border border-charcoal/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold transition-colors;
+  }
+
+  /* Scroll-triggered entrance */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Loading placeholder */
+  .shimmer {
+    background: linear-gradient(100deg,
+      color-mix(in srgb, var(--color-sand) 28%, transparent) 40%,
+      color-mix(in srgb, var(--color-sand) 48%, transparent) 50%,
+      color-mix(in srgb, var(--color-sand) 28%, transparent) 60%);
+    background-size: 200% 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+
+  /* Slow cinematic settle on the homepage hero */
+  .hero-img {
+    animation: hero-zoom 9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* Animated underline for nav links */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    height: 1px;
+    width: 100%;
+    background: var(--color-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes hero-zoom {
+  from { transform: scale(1.07); }
+  to { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero-img {
+    animation: none;
+  }
+}

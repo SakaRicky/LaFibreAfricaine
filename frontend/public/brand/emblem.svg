@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- La Fibre Africaine — interwoven-diamond emblem (print-ready vector).
+       Gold #B88A2A on transparent. Geometry echoes woven fibre / toghu motifs. -->
+  <g stroke="#B88A2A" stroke-width="2.4">
+    <rect x="16.5" y="4.5" width="15" height="15" transform="rotate(45 24 12)"/>
+    <rect x="16.5" y="28.5" width="15" height="15" transform="rotate(45 24 36)"/>
+    <rect x="4.5" y="16.5" width="15" height="15" transform="rotate(45 12 24)"/>
+    <rect x="28.5" y="16.5" width="15" height="15" transform="rotate(45 36 24)"/>
+  </g>
+  <rect x="21" y="21" width="6" height="6" transform="rotate(45 24 24)" fill="#B88A2A"/>
+</svg>

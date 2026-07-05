@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 260" fill="none">
+  <!-- La Fibre Africaine — primary logo lockup (emblem + stacked wordmark + tagline).
+       Web-ready: uses Cormorant Garamond when available (self-hosted on the site).
+       For print/embroidery, have a designer outline the text to paths in this file. -->
+  <g transform="translate(186 20)" stroke="#B88A2A" stroke-width="2.4">
+    <rect x="16.5" y="4.5" width="15" height="15" transform="rotate(45 24 12)"/>
+    <rect x="16.5" y="28.5" width="15" height="15" transform="rotate(45 24 36)"/>
+    <rect x="4.5" y="16.5" width="15" height="15" transform="rotate(45 12 24)"/>
+    <rect x="28.5" y="16.5" width="15" height="15" transform="rotate(45 36 24)"/>
+  </g>
+  <rect x="207" y="41" width="6" height="6" transform="rotate(45 210 44)" fill="#B88A2A"/>
+  <text x="210" y="135" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif"
+        font-size="46" font-weight="600" letter-spacing="6" fill="#183A2D">LA FIBRE</text>
+  <text x="210" y="172" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif"
+        font-size="24" font-weight="500" letter-spacing="14" fill="#183A2D">AFRICAINE</text>
+  <line x1="90" y1="196" x2="330" y2="196" stroke="#B88A2A" stroke-width="0.8"/>
+  <text x="210" y="225" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif"
+        font-size="12" letter-spacing="4" fill="#B88A2A">WEAR YOUR ROOTS WITH ELEGANCE</text>
+</svg>

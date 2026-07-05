@@ -1,0 +1,38 @@
+# Optional deploy-from-Actions to Railway.
+#
+# Recommended day-to-day CD: Railway's native GitHub integration
+# (Railway project → service → Settings → connect this repo, branch main).
+# Railway then redeploys automatically on every push once CI is green —
+# no token needed here.
+#
+# This workflow is the alternative for token-based deploys: add a
+# RAILWAY_TOKEN secret (Railway → project → Settings → Tokens) and a
+# RAILWAY_SERVICE variable (the web service name), then trigger it from
+# the Actions tab.
+
+name: Deploy (Railway)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_SERVICE: ${{ vars.RAILWAY_SERVICE }}
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "::warning::RAILWAY_TOKEN secret is not set — skipping deploy."
+            echo "Add it in Settings → Secrets and variables → Actions, or use Railway's GitHub integration instead."
+            exit 0
+          fi
+          npx -y @railway/cli@latest up --service "${RAILWAY_SERVICE:-web}" --detach

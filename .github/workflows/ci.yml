@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: lafibre
+          POSTGRES_PASSWORD: lafibre
+          POSTGRES_DB: lafibre
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U lafibre"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://lafibre:lafibre@localhost:5432/lafibre
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+
+      # ——— Backend ———
+      - name: Install backend
+        working-directory: backend
+        run: npm ci
+
+      - name: Typecheck backend
+        working-directory: backend
+        run: npm run typecheck
+
+      - name: Apply schema to Postgres (integration check)
+        working-directory: backend
+        run: npx prisma db push --skip-generate
+
+      - name: Seed catalog (integration check)
+        working-directory: backend
+        run: npm run db:seed
+
+      # ——— Frontend ———
+      - name: Install frontend
+        working-directory: frontend
+        run: npm ci
+
+      - name: Typecheck frontend
+        working-directory: frontend
+        run: npm run typecheck
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      # ——— API smoke test against the real server ———
+      - name: Boot API and smoke-test endpoints
+        working-directory: backend
+        run: |
+          npm run start &
+          for i in $(seq 1 20); do
+            curl -sf http://localhost:4000/api/health && break
+            sleep 1
+          done
+          curl -sf http://localhost:4000/api/health
+          curl -sf http://localhost:4000/api/config
+          test "$(curl -sf http://localhost:4000/api/products | python3 -c 'import json,sys; print(len(json.load(sys.stdin)))')" = "25"
+          echo "API smoke test passed"

@@ -1,0 +1,48 @@
+{
+  "name": "la-fibre-africaine-backend",
+  "version": "2.0.0",
+  "description": "Express + Prisma API for La Fibre Africaine ecommerce (TypeScript)",
+  "type": "module",
+  "main": "src/server.ts",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "db:start": "/Library/PostgreSQL/16/bin/pg_ctl -D ../database/pgdata -o \"-p 5433\" -l ../database/pgdata/server.log start",
+    "db:stop": "/Library/PostgreSQL/16/bin/pg_ctl -D ../database/pgdata stop",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:reset": "prisma db push --force-reset && tsx prisma/seed.ts",
+    "prisma:generate": "prisma generate",
+    "start:prod": "prisma db push --skip-generate && NODE_ENV=production SERVE_STATIC=../frontend/dist tsx src/server.ts"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.2.0",
+    "nodemailer": "^9.0.3",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.2.0",
+    "@types/node": "^26.1.0",
+    "@types/nodemailer": "^8.0.1",
+    "prisma": "^6.19.3",
+    "tsx": "^4.23.0",
+    "typescript": "^5.9.3"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}

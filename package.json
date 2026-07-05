@@ -1,0 +1,13 @@
+{
+  "name": "la-fibre-africaine",
+  "version": "1.0.0",
+  "private": true,
+  "description": "La Fibre Africaine — bilingual ecommerce (React + Express + Prisma). Single-service deploy: Express serves the built storefront.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "npm ci --prefix frontend && npm run build --prefix frontend && npm ci --prefix backend && npm run prisma:generate --prefix backend",
+    "start": "npm run start:prod --prefix backend"
+  }
+}

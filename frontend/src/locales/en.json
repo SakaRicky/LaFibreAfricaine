@@ -1,0 +1,181 @@
+{
+  "announcement": "Free shipping on orders over $100 CAD",
+  "brand": {
+    "tagline": "Wear your roots with elegance. Handcrafted in Cameroon, delivered across Canada."
+  },
+  "nav": {
+    "shopAll": "Shop All",
+    "matchingSets": "Matching Sets",
+    "bags": "Bags",
+    "sandals": "Sandals",
+    "ourStory": "Our Story",
+    "cart": "Cart",
+    "menu": "Menu"
+  },
+  "hero": {
+    "eyebrow": "Wear Your Roots",
+    "title": "With Elegance",
+    "sub": "African-inspired bags, sandals and matching sets — handcrafted in Cameroon with culture, quality and love.",
+    "ctaShop": "Shop New Arrivals",
+    "ctaStory": "Discover Our Story"
+  },
+  "values": {
+    "sourced": "Ethically Sourced",
+    "sourcedSub": "Responsibly made in Cameroon",
+    "quality": "Premium Quality",
+    "qualitySub": "Made to last",
+    "love": "Made With Love",
+    "loveSub": "Crafted with care",
+    "shipping": "Reliable Shipping",
+    "shippingSub": "Across Canada"
+  },
+  "home": {
+    "collections": "Shop by Collection",
+    "shopNow": "Shop Now",
+    "storyEyebrow": "Our Story",
+    "storyTitle1": "Rooted in Culture,",
+    "storyTitle2": "Crafted for Today",
+    "storyText": "La Fibre Africaine celebrates African heritage through timeless designs and modern elegance. Every piece is handcrafted in Cameroon and tells a story of tradition, craftsmanship and pride — made to be worn every day, everywhere.",
+    "storyCta": "Discover Our Story",
+    "bestSellers": "Best Sellers",
+    "viewAll": "View All Products"
+  },
+  "newsletter": {
+    "title": "Join Our Community",
+    "text": "Early access to new arrivals from Cameroon, exclusive offers and stories of the craft.",
+    "placeholder": "Enter your email",
+    "cta": "Subscribe",
+    "success": "Merci — you're on the list. Welcome to the family."
+  },
+  "footer": {
+    "shop": "Shop",
+    "allProducts": "All Products",
+    "care": "Customer Care",
+    "careShipping": "Free shipping over $100 CAD",
+    "careDelivery": "Canada-wide delivery",
+    "careExchanges": "Easy exchanges within 14 days",
+    "careWhatsapp": "Order & pay via WhatsApp",
+    "company": "Our Company",
+    "crafted": "Crafted in Cameroon",
+    "based": "Based in Montréal, QC",
+    "rights": "All rights reserved."
+  },
+  "shop": {
+    "title": "All Products",
+    "subtitle": "Handcrafted in Cameroon · Shipped across Canada",
+    "all": "All",
+    "sortFeatured": "Featured",
+    "sortPriceAsc": "Price: Low to High",
+    "sortPriceDesc": "Price: High to Low",
+    "sortName": "Name A–Z",
+    "empty": "No products found."
+  },
+  "badge": {
+    "set": "Matching Set",
+    "personalizable": "Personalizable",
+    "soldOut": "Sold Out"
+  },
+  "product": {
+    "setEyebrow": "Matching Bag & Sandal Set",
+    "origin": "Handcrafted in Cameroon",
+    "size": "Sandal Size (EU)",
+    "personalization": "Name for Personalization",
+    "personalizationPlaceholder": "e.g. Imani, Blessing, Amelia…",
+    "addToCart": "Add to Cart",
+    "added": "Added ✓",
+    "soldOut": "Sold Out",
+    "lowStock": "Only {{count}} left — small-batch production.",
+    "selectSize": "Please select a size first.",
+    "enterName": "Please enter the name you would like on the tote.",
+    "storyTitle": "Story & Origin",
+    "storySuffix": "Each piece is handcrafted in Cameroon and brought to Canada in small batches, so slight variations make yours one of a kind.",
+    "materialsTitle": "Materials & Care",
+    "care": "Spot clean with a soft damp cloth. Keep away from prolonged rain. Store stuffed and upright.",
+    "shippingTitle": "Shipping & Returns",
+    "shippingText": "Free Canada-wide shipping on orders over $100 CAD; $12 flat rate below. Orders ship from Montréal within 2 business days. Exchanges accepted within 14 days.",
+    "related": "You May Also Love",
+    "whatsapp": "Question? Chat with us on WhatsApp",
+    "notFound": "Product not found",
+    "backToShop": "Back to Shop"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty — the collection is waiting.",
+    "shopCta": "Shop the Collection",
+    "summary": "Order Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "free": "Free",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "continue": "Continue Shopping",
+    "remove": "Remove",
+    "each": "{{price}} each",
+    "size": "Size {{size}}",
+    "name": "Name: {{name}}",
+    "away": "You're {{amount}} away from free shipping.",
+    "shipsFree": "Your order ships free."
+  },
+  "drawer": {
+    "title": "Added to Your Cart",
+    "viewCart": "View Cart",
+    "checkout": "Checkout"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "fullName": "Full Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "province": "Province",
+    "postal": "Postal Code",
+    "note": "Order Note",
+    "notePlaceholder": "Gift note, delivery instructions…",
+    "whatsappInfo": "How it works: place your order, then tap the WhatsApp button to confirm payment and delivery directly with us. We usually reply within a few hours.",
+    "placeOrder": "Place Order",
+    "placing": "Placing Order…",
+    "yourOrder": "Your Order",
+    "delivery": "How would you like to receive your order?",
+    "deliveryShipping": "Shipping across Canada",
+    "deliveryPickup": "Pickup in Montréal (cash accepted)"
+  },
+  "confirmation": {
+    "thanks": "Merci · Thank You",
+    "title": "Your order is reserved",
+    "text": "Order {{number}} is set aside for you. To complete it, continue on WhatsApp — we'll confirm payment (Interac e-Transfer) and delivery together.",
+    "whatsappCta": "Complete My Order on WhatsApp",
+    "whatsappHint": "Opens WhatsApp with your order details pre-filled.",
+    "details": "Order Details",
+    "shippingTo": "Shipping to {{city}}, {{province}}",
+    "continue": "Continue Shopping",
+    "notFound": "Order not found",
+    "pickupLine": "Pickup order — we'll arrange the meeting point on WhatsApp"
+  },
+  "about": {
+    "eyebrow": "Our Story",
+    "title": "Rooted in Culture, Crafted for Today",
+    "p1": "La Fibre Africaine was born from a simple observation: African families in Canada rarely find products that represent their identity with the elegance it deserves. Cultural fashion was either far away, or it looked like a souvenir.",
+    "p2": "So we went to the source. Every bag and sandal we sell is handcrafted in Cameroon — hand-pieced Ankara patchwork, embroidered toghu velvet from the Grassfields, kente geometry, cowrie shells that were once currency across the continent. Then we bring them to Montréal and ship them across Canada.",
+    "p3": "The name means \"the African fibre\" — the thread of culture that runs through fabric, through families, and through generations. Our matching sets exist for exactly that reason: a mother and daughter wearing the same cloth, an outfit completed for church or a celebration, a gift that says you belong.",
+    "quote": "People don't simply buy a bag or a sandal. They buy confidence, belonging, memory and identity.",
+    "valuesTitle": "What We Stand For",
+    "v1Title": "Authenticity",
+    "v1Text": "We honour African culture and craftsmanship with respect. Our pieces are truly made in Cameroon — that story is real, and we tell it proudly.",
+    "v2Title": "Elegance",
+    "v2Text": "Refinement, calm and timeless taste. African prints deserve to be worn at work, at celebrations and in everyday life — with elegance.",
+    "v3Title": "Craftsmanship",
+    "v3Text": "Hand-pieced patchwork, embroidered toghu, cowrie details. We make the artisan's hand visible in every piece.",
+    "v4Title": "Cultural Transmission",
+    "v4Text": "We help families pass pride to the next generation — so girls grow up seeing their heritage as beautiful.",
+    "craftEyebrow": "From Cameroon, With Care",
+    "craftTitle1": "Small Batches,",
+    "craftTitle2": "Made to Be Kept",
+    "craftText": "We produce in small batches with artisans in Cameroon, which means limited quantities and pieces that are never quite identical. Your order arrives wrapped with the same care it was made with — and when something sells out, a new batch is already on its way.",
+    "craftCta": "Shop the Collection"
+  },
+  "wa": {
+    "orderMessage": "Hello La Fibre Africaine! I just placed order {{number}} — total {{total}}.\n{{items}}\nI would like to confirm payment and delivery. Thank you!",
+    "productMessage": "Hello La Fibre Africaine! I have a question about \"{{name}}\" — {{url}}"
+  }
+}

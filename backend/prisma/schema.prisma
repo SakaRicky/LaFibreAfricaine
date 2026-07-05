@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Collection {
+  id            Int       @id @default(autoincrement())
+  slug          String    @unique
+  nameEn        String    @map("name_en")
+  nameFr        String    @map("name_fr")
+  descriptionEn String    @default("") @map("description_en")
+  descriptionFr String    @default("") @map("description_fr")
+  sortOrder     Int       @default(0) @map("sort_order")
+  products      Product[]
+
+  @@map("collections")
+}
+
+model Product {
+  id             Int            @id @default(autoincrement())
+  slug           String         @unique
+  name           String
+  collectionId   Int            @map("collection_id")
+  collection     Collection     @relation(fields: [collectionId], references: [id])
+  priceCents     Int            @map("price_cents")
+  descriptionEn  String         @default("") @map("description_en")
+  descriptionFr  String         @default("") @map("description_fr")
+  storyEn        String         @default("") @map("story_en")
+  storyFr        String         @default("") @map("story_fr")
+  materialsEn    String         @default("") @map("materials_en")
+  materialsFr    String         @default("") @map("materials_fr")
+  colorEn        String         @default("") @map("color_en")
+  colorFr        String         @default("") @map("color_fr")
+  stock          Int            @default(0)
+  featured       Boolean        @default(false)
+  isSet          Boolean        @default(false) @map("is_set")
+  personalizable Boolean        @default(false)
+  archived       Boolean        @default(false)
+  createdAt      DateTime       @default(now()) @map("created_at")
+  images         ProductImage[]
+  sizes          ProductSize[]
+  orderItems     OrderItem[]
+
+  @@index([collectionId])
+  @@map("products")
+}
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String  @default("")
+  sortOrder Int     @default(0) @map("sort_order")
+
+  @@index([productId])
+  @@map("product_images")
+}
+
+model ProductSize {
+  id        Int     @id @default(autoincrement())
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size      String
+  stock     Int     @default(0)
+
+  @@unique([productId, size])
+  @@map("product_sizes")
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  orderNumber   String      @unique @map("order_number")
+  customerName  String      @map("customer_name")
+  email         String
+  phone         String      @default("")
+  addressLine   String      @map("address_line")
+  city          String
+  province      String
+  postalCode    String      @map("postal_code")
+  note          String      @default("")
+  deliveryMethod String     @default("shipping") @map("delivery_method")
+  lang          String      @default("fr")
+  subtotalCents Int         @map("subtotal_cents")
+  shippingCents Int         @map("shipping_cents")
+  totalCents    Int         @map("total_cents")
+  status        String      @default("pending_whatsapp")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  items         OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id              Int     @id @default(autoincrement())
+  orderId         Int     @map("order_id")
+  order           Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId       Int     @map("product_id")
+  product         Product @relation(fields: [productId], references: [id])
+  productName     String  @map("product_name")
+  size            String?
+  personalization String?
+  quantity        Int
+  unitPriceCents  Int     @map("unit_price_cents")
+
+  @@map("order_items")
+}
+
+model NewsletterSubscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("newsletter_subscribers")
+}
+
+model AdminUser {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String   @default("")
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("admin_users")
+}
+
+model Setting {
+  key   String @id
+  value String @default("")
+
+  @@map("settings")
+}

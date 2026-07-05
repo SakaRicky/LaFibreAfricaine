@@ -1,0 +1,181 @@
+{
+  "announcement": "Livraison gratuite dès 100 $ CAD",
+  "brand": {
+    "tagline": "Portez vos racines avec élégance. Fait main au Cameroun, livré partout au Canada."
+  },
+  "nav": {
+    "shopAll": "Tout voir",
+    "matchingSets": "Ensembles assortis",
+    "bags": "Sacs",
+    "sandals": "Sandales",
+    "ourStory": "Notre histoire",
+    "cart": "Panier",
+    "menu": "Menu"
+  },
+  "hero": {
+    "eyebrow": "Portez vos racines",
+    "title": "Avec Élégance",
+    "sub": "Sacs, sandales et ensembles assortis d'inspiration africaine — faits main au Cameroun avec culture, qualité et amour.",
+    "ctaShop": "Découvrir les nouveautés",
+    "ctaStory": "Notre histoire"
+  },
+  "values": {
+    "sourced": "Sourcé avec éthique",
+    "sourcedSub": "Fabriqué au Cameroun",
+    "quality": "Qualité supérieure",
+    "qualitySub": "Fait pour durer",
+    "love": "Fait avec amour",
+    "loveSub": "Confectionné avec soin",
+    "shipping": "Livraison fiable",
+    "shippingSub": "Partout au Canada"
+  },
+  "home": {
+    "collections": "Nos collections",
+    "shopNow": "Découvrir",
+    "storyEyebrow": "Notre histoire",
+    "storyTitle1": "Enracinée dans la culture,",
+    "storyTitle2": "créée pour aujourd'hui",
+    "storyText": "La Fibre Africaine célèbre l'héritage africain à travers des créations intemporelles et une élégance moderne. Chaque pièce est faite main au Cameroun et raconte une histoire de tradition, d'artisanat et de fierté — pensée pour être portée chaque jour, partout.",
+    "storyCta": "Découvrir notre histoire",
+    "bestSellers": "Meilleures ventes",
+    "viewAll": "Voir tous les produits"
+  },
+  "newsletter": {
+    "title": "Rejoignez notre communauté",
+    "text": "Accès en primeur aux nouveautés du Cameroun, offres exclusives et récits de l'artisanat.",
+    "placeholder": "Votre courriel",
+    "cta": "S'abonner",
+    "success": "Merci — vous êtes sur la liste. Bienvenue dans la famille."
+  },
+  "footer": {
+    "shop": "Boutique",
+    "allProducts": "Tous les produits",
+    "care": "Service client",
+    "careShipping": "Livraison gratuite dès 100 $ CAD",
+    "careDelivery": "Livraison partout au Canada",
+    "careExchanges": "Échanges faciles sous 14 jours",
+    "careWhatsapp": "Commande et paiement par WhatsApp",
+    "company": "La maison",
+    "crafted": "Fait main au Cameroun",
+    "based": "Basée à Montréal, QC",
+    "rights": "Tous droits réservés."
+  },
+  "shop": {
+    "title": "Tous les produits",
+    "subtitle": "Fait main au Cameroun · Livré partout au Canada",
+    "all": "Tout",
+    "sortFeatured": "En vedette",
+    "sortPriceAsc": "Prix : croissant",
+    "sortPriceDesc": "Prix : décroissant",
+    "sortName": "Nom A–Z",
+    "empty": "Aucun produit trouvé."
+  },
+  "badge": {
+    "set": "Ensemble assorti",
+    "personalizable": "Personnalisable",
+    "soldOut": "Épuisé"
+  },
+  "product": {
+    "setEyebrow": "Ensemble sac et sandales assortis",
+    "origin": "Fait main au Cameroun",
+    "size": "Pointure (EU)",
+    "personalization": "Prénom à personnaliser",
+    "personalizationPlaceholder": "ex. Imani, Blessing, Amelia…",
+    "addToCart": "Ajouter au panier",
+    "added": "Ajouté ✓",
+    "soldOut": "Épuisé",
+    "lowStock": "Plus que {{count}} en stock — production en petites séries.",
+    "selectSize": "Veuillez d'abord choisir une pointure.",
+    "enterName": "Veuillez indiquer le prénom souhaité sur le cabas.",
+    "storyTitle": "Histoire et origine",
+    "storySuffix": "Chaque pièce est faite main au Cameroun et arrive au Canada en petites séries : de légères variations rendent la vôtre unique.",
+    "materialsTitle": "Matières et entretien",
+    "care": "Nettoyer localement avec un chiffon doux et humide. Éviter la pluie prolongée. Ranger rembourré et debout.",
+    "shippingTitle": "Livraison et retours",
+    "shippingText": "Livraison gratuite partout au Canada dès 100 $ CAD ; 12 $ en deçà. Expédition depuis Montréal sous 2 jours ouvrables. Échanges acceptés sous 14 jours.",
+    "related": "Vous aimerez aussi",
+    "whatsapp": "Une question ? Écrivez-nous sur WhatsApp",
+    "notFound": "Produit introuvable",
+    "backToShop": "Retour à la boutique"
+  },
+  "cart": {
+    "title": "Votre panier",
+    "empty": "Votre panier est vide — la collection vous attend.",
+    "shopCta": "Découvrir la collection",
+    "summary": "Récapitulatif",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "free": "Gratuite",
+    "total": "Total",
+    "checkout": "Passer à la caisse",
+    "continue": "Continuer vos achats",
+    "remove": "Retirer",
+    "each": "{{price}} chacun",
+    "size": "Pointure {{size}}",
+    "name": "Prénom : {{name}}",
+    "away": "Plus que {{amount}} pour profiter de la livraison gratuite.",
+    "shipsFree": "Votre commande est livrée gratuitement."
+  },
+  "drawer": {
+    "title": "Ajouté au panier",
+    "viewCart": "Voir le panier",
+    "checkout": "Passer à la caisse"
+  },
+  "checkout": {
+    "title": "Caisse",
+    "fullName": "Nom complet",
+    "email": "Courriel",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "city": "Ville",
+    "province": "Province",
+    "postal": "Code postal",
+    "note": "Note de commande",
+    "notePlaceholder": "Mot pour un cadeau, consignes de livraison…",
+    "whatsappInfo": "Comment ça marche : passez votre commande, puis touchez le bouton WhatsApp pour confirmer le paiement et la livraison directement avec nous. Nous répondons généralement en quelques heures.",
+    "placeOrder": "Passer la commande",
+    "placing": "Commande en cours…",
+    "yourOrder": "Votre commande",
+    "delivery": "Mode de réception",
+    "deliveryShipping": "Livraison partout au Canada",
+    "deliveryPickup": "Ramassage à Montréal (comptant accepté)"
+  },
+  "confirmation": {
+    "thanks": "Merci · Thank You",
+    "title": "Votre commande est réservée",
+    "text": "La commande {{number}} est mise de côté pour vous. Pour la finaliser, poursuivez sur WhatsApp — nous confirmerons ensemble le paiement (virement Interac) et la livraison.",
+    "whatsappCta": "Finaliser ma commande sur WhatsApp",
+    "whatsappHint": "Ouvre WhatsApp avec les détails de votre commande déjà remplis.",
+    "details": "Détails de la commande",
+    "shippingTo": "Livraison à {{city}}, {{province}}",
+    "continue": "Continuer vos achats",
+    "notFound": "Commande introuvable",
+    "pickupLine": "Commande à ramasser — le lieu de rencontre sera convenu sur WhatsApp"
+  },
+  "about": {
+    "eyebrow": "Notre histoire",
+    "title": "Enracinée dans la culture, créée pour aujourd'hui",
+    "p1": "La Fibre Africaine est née d'un constat simple : les familles africaines au Canada trouvent rarement des produits qui représentent leur identité avec l'élégance qu'elle mérite. La mode culturelle était soit lointaine, soit réduite au souvenir de voyage.",
+    "p2": "Alors nous sommes allés à la source. Chaque sac et chaque sandale est fait main au Cameroun — patchwork de wax assemblé à la main, velours toghu brodé des Grassfields, géométrie du kente, cauris qui furent jadis monnaie à travers le continent. Puis nous les apportons à Montréal et les expédions partout au Canada.",
+    "p3": "Le nom dit tout : la fibre africaine, ce fil de culture qui traverse les étoffes, les familles et les générations. Nos ensembles assortis existent pour cette raison précise : une mère et sa fille vêtues de la même étoffe, une tenue complétée pour la messe ou une célébration, un cadeau qui dit tu appartiens.",
+    "quote": "On n'achète pas simplement un sac ou une sandale. On achète de la confiance, de l'appartenance, de la mémoire et une identité.",
+    "valuesTitle": "Nos valeurs",
+    "v1Title": "Authenticité",
+    "v1Text": "Nous honorons la culture et l'artisanat africains avec respect. Nos pièces sont véritablement faites au Cameroun — cette histoire est vraie, et nous la racontons avec fierté.",
+    "v2Title": "Élégance",
+    "v2Text": "Le raffinement, le calme et le goût intemporel. Les imprimés africains méritent d'être portés au travail, aux célébrations et au quotidien — avec élégance.",
+    "v3Title": "Artisanat",
+    "v3Text": "Patchwork cousu main, toghu brodé, détails en cauris. Nous rendons visible la main de l'artisan dans chaque pièce.",
+    "v4Title": "Transmission culturelle",
+    "v4Text": "Nous aidons les familles à transmettre la fierté à la génération suivante — pour que les filles grandissent en voyant la beauté de leur héritage.",
+    "craftEyebrow": "Du Cameroun, avec soin",
+    "craftTitle1": "Petites séries,",
+    "craftTitle2": "faites pour durer",
+    "craftText": "Nous produisons en petites séries avec des artisans au Cameroun : des quantités limitées et des pièces jamais tout à fait identiques. Votre commande arrive emballée avec le même soin que celui de sa fabrication — et quand une pièce s'épuise, une nouvelle série est déjà en route.",
+    "craftCta": "Découvrir la collection"
+  },
+  "wa": {
+    "orderMessage": "Bonjour La Fibre Africaine ! Je viens de passer la commande {{number}} — total {{total}}.\n{{items}}\nJ'aimerais confirmer le paiement et la livraison. Merci !",
+    "productMessage": "Bonjour La Fibre Africaine ! J'ai une question au sujet de « {{name}} » — {{url}}"
+  }
+}
