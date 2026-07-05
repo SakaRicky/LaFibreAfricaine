@@ -54,6 +54,7 @@ model ProductImage {
   productId Int     @map("product_id")
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   url       String
+  publicId  String? @map("public_id")
   alt       String  @default("")
   sortOrder Int     @default(0) @map("sort_order")
 

@@ -13,6 +13,7 @@ import {
 } from "../middleware/auth.js";
 import type { AdminRequest } from "../middleware/auth.js";
 import { sendPaidThankYou, sendShippedNotice } from "../mail.js";
+import { cloudinary, cloudinaryReady, uploadBuffer, deliveryUrl } from "../cloudinary.js";
 
 const router = Router();
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -222,7 +223,8 @@ router.patch("/products/:id/sizes", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// Photo upload — resized with sharp, stored in media/uploads
+// Photo upload — resized with sharp, then sent to Cloudinary (CDN, f_auto/q_auto).
+// Falls back to local media/uploads when CLOUDINARY_URL is not configured.
 router.post("/products/:id/images", upload.single("image"), async (req: AdminRequest, res: Response, next) => {
   try {
     const productId = Number(req.params.id);
@@ -230,21 +232,29 @@ router.post("/products/:id/images", upload.single("image"), async (req: AdminReq
     if (!product) return res.status(404).json({ error: "Produit introuvable" });
     if (!req.file) return res.status(400).json({ error: "Aucune image reçue" });
 
-    await mkdir(UPLOADS_DIR, { recursive: true });
-    const filename = `${product.slug}-${Date.now().toString(36)}.jpg`;
-    await sharp(req.file.buffer)
+    const resized = await sharp(req.file.buffer)
       .rotate()
       .resize(2000, 2000, { fit: "inside", withoutEnlargement: true })
       .jpeg({ quality: 85 })
-      .toFile(join(UPLOADS_DIR, filename));
+      .toBuffer();
+
+    const stem = `${product.slug}-${Date.now().toString(36)}`;
+    let url: string;
+    let publicId: string | null = null;
+
+    if (cloudinaryReady) {
+      const uploaded = await uploadBuffer(resized, `lafibre/uploads/${stem}`);
+      publicId = uploaded.public_id;
+      url = deliveryUrl(publicId);
+    } else {
+      await mkdir(UPLOADS_DIR, { recursive: true });
+      const { writeFile } = await import("fs/promises");
+      await writeFile(join(UPLOADS_DIR, `${stem}.jpg`), resized);
+      url = `/media/uploads/${stem}.jpg`;
+    }
 
     const image = await prisma.productImage.create({
-      data: {
-        productId,
-        url: `/media/uploads/${filename}`,
-        alt: product.name,
-        sortOrder: product.images.length,
-      },
+      data: { productId, url, publicId, alt: product.name, sortOrder: product.images.length },
     });
     res.status(201).json(image);
   } catch (err) { next(err); }
@@ -253,7 +263,9 @@ router.post("/products/:id/images", upload.single("image"), async (req: AdminReq
 router.delete("/images/:id", async (req, res, next) => {
   try {
     const image = await prisma.productImage.delete({ where: { id: Number(req.params.id) } });
-    if (image.url.startsWith("/media/uploads/")) {
+    if (image.publicId && cloudinaryReady) {
+      await cloudinary.uploader.destroy(image.publicId).catch(() => {});
+    } else if (image.url.startsWith("/media/uploads/")) {
       await unlink(join(UPLOADS_DIR, image.url.split("/").pop()!)).catch(() => {});
     }
     res.json({ ok: true });

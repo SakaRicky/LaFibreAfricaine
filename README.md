@@ -13,6 +13,7 @@ handcrafted in Cameroon and shipped across Canada.
 | Backend  | Node.js + Express 5 (TypeScript, run with tsx)                     |
 | ORM      | Prisma 6                                                           |
 | Database | PostgreSQL 16 (project-local cluster in `database/pgdata`, port **5433**) |
+| Media    | **Cloudinary CDN** — catalog + admin uploads, auto WebP/AVIF (`f_auto,q_auto`); local-disk fallback when unset |
 | Payment  | **V1: WhatsApp** — orders are reserved in the DB, then finalized in a WhatsApp chat with the admin |
 | Admin    | French dashboard at **/admin** — orders, products, stock, photos, settings, multi-admin |
 | Emails   | Customer confirmation / paid thank-you (-10% code) / shipped notice + admin alerts (SMTP via env; skipped gracefully if unset) |
@@ -57,6 +58,7 @@ Other backend commands:
 - `npm run db:push` — sync Prisma schema to the database
 - `npm run db:seed` — load the 26-product bilingual catalog
 - `npm run typecheck` — TypeScript check (also available in `frontend/`)
+- `npm run media:cloudinary` — one-time: upload catalog photos to Cloudinary and repoint DB URLs
 
 ## Deployment
 
@@ -89,7 +91,7 @@ See **DEPLOY.md** (Railway single-service + Postgres + volume for photo uploads,
 - `GET /api/collections` — collections with counts and cover images
 - `POST /api/orders` / `GET /api/orders/:orderNumber`
 - `POST /api/newsletter`
-- `GET /media/products/*.jpg` — product photography
+- `GET /media/*` — local fallback for product photography (production uses Cloudinary URLs)
 
 ## Business rules
 

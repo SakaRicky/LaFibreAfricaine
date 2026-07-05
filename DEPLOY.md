@@ -19,17 +19,24 @@ Le repo doit d'abord être poussé sur GitHub (ou utiliser `railway up` depuis c
 | `SMTP_USER` | l'adresse Gmail d'envoi |
 | `SMTP_PASS` | mot de passe d'application Gmail (PAS le mot de passe normal) |
 | `MAIL_FROM` | `"La Fibre Africaine" <votre@gmail.com>` |
+| `CLOUDINARY_URL` | `cloudinary://…` (dashboard Cloudinary → API Keys) — héberge et sert les photos produits |
 
 `PORT` est fourni automatiquement par Railway. `SERVE_STATIC` et `NODE_ENV` sont déjà dans le script de démarrage.
 
-## 3. Volume pour les photos téléversées
+## 3. Photos : Cloudinary (aucun volume nécessaire)
 
-Les uploads admin vont dans `backend/media/uploads`. Sans volume, ils disparaissent à chaque déploiement.
+Avec `CLOUDINARY_URL` configurée, toutes les photos (catalogue + téléversements admin)
+sont hébergées et servies par le CDN Cloudinary, avec optimisation automatique
+(WebP/AVIF). Rien à faire de plus.
 
-- Service web → **Settings** → **Volumes** → **Add Volume**
-- Mount path : `/app/backend/media/uploads`
+Après le premier seed, envoyer les photos du catalogue vers Cloudinary (une seule fois) :
 
-(Les photos du catalogue initial dans `backend/media/products` sont dans le repo — pas besoin de volume pour elles.)
+```bash
+railway run --service <nom-du-service-web> npm run media:cloudinary --prefix backend
+```
+
+(Sans Cloudinary, l'app retombe sur le disque local `backend/media` — il faudrait alors
+un volume monté sur `/app/backend/media/uploads`, mais Cloudinary est la voie recommandée.)
 
 ## 4. Première mise en service
 

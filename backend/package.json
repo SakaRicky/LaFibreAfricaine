@@ -14,13 +14,15 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma db push --force-reset && tsx prisma/seed.ts",
     "prisma:generate": "prisma generate",
-    "start:prod": "prisma db push --skip-generate && NODE_ENV=production SERVE_STATIC=../frontend/dist tsx src/server.ts"
+    "start:prod": "prisma db push --skip-generate && NODE_ENV=production SERVE_STATIC=../frontend/dist tsx src/server.ts",
+    "media:cloudinary": "tsx scripts/upload-media.ts"
   },
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
     "@prisma/client": "^6.19.3",
     "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.10.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
