@@ -235,9 +235,9 @@ export default function Products() {
     <div>
       <h1 className="font-display text-3xl font-semibold">Produits</h1>
 
-      <form onSubmit={create} className="mt-5 flex flex-wrap items-end gap-3 border border-charcoal/10 bg-white p-4">
+      <form onSubmit={create} className="mt-5 grid gap-3 border border-charcoal/10 bg-white p-4 sm:flex sm:flex-wrap sm:items-end">
         <Field label="Nouveau produit — nom">
-          <input required className="field w-56" value={newProduct.name}
+          <input required className="field sm:w-56" value={newProduct.name}
                  onChange={(e) => setNewProduct((f) => ({ ...f, name: e.target.value }))} />
         </Field>
         <Field label="Collection">
@@ -247,7 +247,7 @@ export default function Products() {
           </select>
         </Field>
         <Field label="Prix ($ CAD)">
-          <input required type="number" step="0.01" min="0" className="field w-28" value={newProduct.price}
+          <input required type="number" step="0.01" min="0" className="field sm:w-28" value={newProduct.price}
                  onChange={(e) => setNewProduct((f) => ({ ...f, price: e.target.value }))} />
         </Field>
         <button type="submit" className="btn-gold">Créer</button>
@@ -265,21 +265,21 @@ export default function Products() {
               <div key={p.id} className={`border bg-white ${p.archived ? "border-charcoal/10 opacity-60" : "border-charcoal/10"}`}>
                 <button
                   onClick={() => setOpenId(open ? null : p.id)}
-                  className="flex w-full items-center gap-4 px-4 py-3 text-left"
+                  className="flex w-full flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 text-left"
                 >
                   <div className="h-14 w-11 shrink-0 overflow-hidden bg-sand/30">
                     {p.images[0] && <img src={p.images[0].url} alt="" className="h-full w-full object-cover" />}
                   </div>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <p className="truncate font-medium text-forest">{p.name}</p>
-                    <p className="text-[12px] text-charcoal/50">{p.collection.nameFr}</p>
+                    <p className="truncate text-[12px] text-charcoal/50">{p.collection.nameFr}</p>
                   </div>
-                  <span className="ml-auto flex items-center gap-4 text-sm">
-                    <span>{cad(p.priceCents)}</span>
-                    <span className={`px-2 py-0.5 text-[11px] font-semibold ${p.stock > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}>
+                  <span className="flex w-full items-center justify-between gap-3 text-sm sm:ml-auto sm:w-auto sm:justify-end">
+                    <span className="shrink-0">{cad(p.priceCents)}</span>
+                    <span className={`shrink-0 px-2 py-0.5 text-[11px] font-semibold ${p.stock > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}>
                       Stock : {p.stock}
                     </span>
-                    {p.archived && <span className="text-[11px] uppercase text-charcoal/50">Archivé</span>}
+                    {p.archived && <span className="shrink-0 text-[11px] uppercase text-charcoal/50">Archivé</span>}
                     <span className="text-charcoal/40">{open ? "▴" : "▾"}</span>
                   </span>
                 </button>

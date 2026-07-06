@@ -29,6 +29,7 @@ const NAV = [
 function Layout({ children }: { children: React.ReactNode }) {
   const { me, setMe } = useAdminAuth();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const logout = async () => {
     await adminApi.logout().catch(() => {});
@@ -37,8 +38,56 @@ function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="flex min-h-screen bg-ivory">
-      <aside className="flex w-60 shrink-0 flex-col bg-forest text-ivory">
+    <div className="min-h-screen bg-ivory lg:flex">
+      {/* Mobile top bar */}
+      <header className="sticky top-0 z-40 bg-forest text-ivory lg:hidden">
+        <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-2.5">
+            <Emblem className="h-7 w-7 text-gold" />
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em]">Administration</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/"
+              className="border border-ivory/30 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-ivory/90 hover:border-gold hover:text-gold"
+            >
+              Boutique
+            </Link>
+            <button onClick={() => setMenuOpen((v) => !v)} className="p-1.5" aria-label="Menu" aria-expanded={menuOpen}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+                {menuOpen ? <path d="M5 5l14 14M19 5L5 19" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+              </svg>
+            </button>
+          </div>
+        </div>
+        {menuOpen && (
+          <nav className="border-t border-ivory/10 px-4 pb-4 pt-2">
+            {NAV.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  `block px-2 py-2.5 text-[14px] font-medium tracking-wide ${
+                    isActive ? "text-gold" : "text-ivory/85"
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+            <button
+              onClick={logout}
+              className="mt-2 block w-full border-t border-ivory/10 px-2 pb-1 pt-3 text-left text-[13px] text-ivory/60"
+            >
+              Déconnexion {me ? `(${me.name || me.email})` : ""}
+            </button>
+          </nav>
+        )}
+      </header>
+
+      {/* Desktop sidebar */}
+      <aside className="hidden w-60 shrink-0 flex-col bg-forest text-ivory lg:flex">
         <div className="flex items-center gap-2.5 px-5 py-6">
           <Emblem className="h-8 w-8 text-gold" />
           <div className="leading-tight">
@@ -68,7 +117,8 @@ function Layout({ children }: { children: React.ReactNode }) {
           </button>
         </div>
       </aside>
-      <main className="min-w-0 flex-1 p-6 lg:p-10">{children}</main>
+
+      <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-10">{children}</main>
     </div>
   );
 }
