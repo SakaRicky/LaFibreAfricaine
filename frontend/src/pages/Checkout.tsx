@@ -6,6 +6,7 @@ import { useConfig } from "../context/ConfigContext.tsx";
 import { useLocale } from "../hooks/useLocale.ts";
 import { api } from "../lib/api.ts";
 import WhatsAppIcon from "../components/WhatsAppIcon.tsx";
+import HowItWorks from "../components/HowItWorks.tsx";
 import type { CustomerPayload, DeliveryMethod } from "../types.ts";
 
 const PROVINCES = ["QC", "ON", "BC", "AB", "MB", "SK", "NS", "NB", "NL", "PE", "NT", "YT", "NU"];
@@ -72,6 +73,10 @@ export default function Checkout() {
   return (
     <div className="mx-auto max-w-7xl px-6 py-14">
       <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("checkout.title")}</h1>
+
+      <div className="mt-8">
+        <HowItWorks compact />
+      </div>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_380px]">
         <form onSubmit={submit} className="space-y-5">

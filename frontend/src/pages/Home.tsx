@@ -4,6 +4,7 @@ import { api } from "../lib/api.ts";
 import { useLocale } from "../hooks/useLocale.ts";
 import ProductCard from "../components/ProductCard.tsx";
 import NewsletterSignup from "../components/NewsletterSignup.tsx";
+import HowItWorks from "../components/HowItWorks.tsx";
 import Reveal from "../components/Reveal.tsx";
 import { ProductGridSkeleton } from "../components/Skeleton.tsx";
 import type { CollectionInfo, Product } from "../types.ts";
@@ -109,6 +110,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <HowItWorks />
 
       {/* Story band */}
       <section className="bg-white">

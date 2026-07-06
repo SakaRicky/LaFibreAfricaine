@@ -273,6 +273,22 @@ export default function Product() {
             {t("product.whatsapp")}
           </a>
 
+          {/* Trust badges */}
+          <ul className="mt-6 grid gap-3 border-t border-charcoal/10 pt-5 sm:grid-cols-3">
+            {[
+              { label: t("product.trustPay"), icon: "M3 7h18v10H3V7Zm9 2.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" },
+              { label: t("product.trustNoCard"), icon: "M3 6h18v12H3V6Zm0 4h18M5 20 19 4" },
+              { label: t("product.trustExchange"), icon: "M4 9a8 8 0 0 1 13.7-3.2L20 8M20 8V4m0 4h-4M20 15a8 8 0 0 1-13.7 3.2L4 16m0 0v4m0-4h4" },
+            ].map((b) => (
+              <li key={b.label} className="flex items-center gap-2.5">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5 shrink-0 text-gold">
+                  <path d={b.icon} strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span className="text-[12px] font-medium leading-snug text-charcoal/70">{b.label}</span>
+              </li>
+            ))}
+          </ul>
+
           <div className="mt-10">
             {story && (
               <Accordion title={t("product.storyTitle")} defaultOpen>

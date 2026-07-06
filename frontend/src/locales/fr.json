@@ -59,7 +59,10 @@
     "crafted": "Fait main au Cameroun",
     "based": "Basée à Montréal, QC",
     "rights": "Tous droits réservés.",
-    "admin": "Administration"
+    "admin": "Administration",
+    "faq": "FAQ",
+    "shippingReturns": "Livraison et retours",
+    "contact": "Contact"
   },
   "shop": {
     "title": "Tous les produits",
@@ -97,7 +100,10 @@
     "related": "Vous aimerez aussi",
     "whatsapp": "Une question ? Écrivez-nous sur WhatsApp",
     "notFound": "Produit introuvable",
-    "backToShop": "Retour à la boutique"
+    "backToShop": "Retour à la boutique",
+    "trustPay": "Payez à la réception (Montréal)",
+    "trustNoCard": "Aucune carte requise",
+    "trustExchange": "Échange sous 14 jours"
   },
   "cart": {
     "title": "Votre panier",
@@ -133,7 +139,7 @@
     "postal": "Code postal",
     "note": "Note de commande",
     "notePlaceholder": "Mot pour un cadeau, consignes de livraison…",
-    "whatsappInfo": "Comment ça marche : passez votre commande, puis touchez le bouton WhatsApp pour confirmer le paiement et la livraison directement avec nous. Nous répondons généralement en quelques heures.",
+    "whatsappInfo": "Aucun paiement en ligne aujourd'hui — votre commande est réservée 48 h. Nous confirmons ensemble sur WhatsApp le paiement (Interac ou comptant à la livraison/au ramassage) et les détails.",
     "placeOrder": "Passer la commande",
     "placing": "Commande en cours…",
     "yourOrder": "Votre commande",
@@ -178,5 +184,48 @@
   "wa": {
     "orderMessage": "Bonjour La Fibre Africaine ! Je viens de passer la commande {{number}} — total {{total}}.\n{{items}}\nJ'aimerais confirmer le paiement et la livraison. Merci !",
     "productMessage": "Bonjour La Fibre Africaine ! J'ai une question au sujet de « {{name}} » — {{url}}"
+  },
+  "how": {
+    "title": "Comment ça marche",
+    "s1Title": "Commandez en ligne",
+    "s1Text": "Choisissez vos pièces et validez — aucune carte requise, aucun paiement aujourd'hui.",
+    "s2Title": "On confirme sur WhatsApp",
+    "s2Text": "Nous validons votre commande et organisons ensemble la livraison ou le ramassage. Réponse en quelques heures.",
+    "s3Title": "Payez à la réception",
+    "s3Text": "Interac ou comptant — à la livraison à Montréal, au ramassage à Lachine, ou après confirmation pour l'expédition."
+  },
+  "faq": {
+    "title": "Foire aux questions",
+    "subtitle": "Tout savoir sur la commande, le paiement et la réception de vos pièces.",
+    "q1": "Comment passer une commande ?",
+    "a1": "Ajoutez vos pièces au panier et validez — aucune carte requise. Votre commande est réservée, puis nous poursuivons sur WhatsApp pour tout confirmer ensemble.",
+    "q2": "Comment payer ?",
+    "a2": "Par virement Interac ou comptant. À Montréal, vous payez à la livraison ou au ramassage, une fois l'article entre vos mains. Pour l'expédition ailleurs au Canada, le paiement se confirme sur WhatsApp avant l'envoi.",
+    "q3": "Dois-je payer avant de recevoir ma commande ?",
+    "a3": "Pas à Montréal — vous inspectez d'abord votre article. Pour les commandes expédiées, nous vous envoyons une photo ou une vidéo de votre article au moment de l'emballage, avant le paiement.",
+    "q4": "Livrez-vous partout au Canada ?",
+    "a4": "Oui — 12 $, gratuite dès 100 $ CAD. À Montréal : remise en main propre ou ramassage gratuit à Lachine.",
+    "q5": "D'où viennent les produits ?",
+    "a5": "Chaque pièce est faite main au Cameroun en petites séries, puis apportée à Montréal. Les légères variations entre les pièces sont la preuve de la main de l'artisan.",
+    "q6": "Et si l'article ne me convient pas ?",
+    "a6": "Échange sous 14 jours, article non porté. Écrivez-nous simplement sur WhatsApp — c'est facile.",
+    "q7": "Quelles pointures de sandales offrez-vous ?",
+    "a7": "EU 36 à 43. Un doute sur votre pointure ? Demandez-nous sur WhatsApp avant de commander.",
+    "q8": "Comment nous joindre ?",
+    "a8": "Sur WhatsApp au +1 (263) 880-7371 ou par courriel à contact@lafibreafricaine.com — réponse en quelques heures."
+  },
+  "ship": {
+    "title": "Livraison et retours",
+    "subtitle": "Clair, simple, et vous ne payez jamais avant d'être sûre.",
+    "s1t": "Livraison à Montréal",
+    "s1p": "Nous livrons en main propre et vous payez à la réception (Interac ou comptant), une fois l'article entre vos mains.",
+    "s2t": "Ramassage à Lachine",
+    "s2p": "Gratuit. Nous convenons du lieu de rencontre sur WhatsApp et vous payez sur place, après avoir vu vos pièces.",
+    "s3t": "Expédition partout au Canada",
+    "s3p": "12 $, gratuite dès 100 $ CAD. Les commandes quittent Montréal sous 2 jours ouvrables. Avant l'envoi, nous vous envoyons une photo de votre article au moment de l'emballage, et nous partageons le suivi sur WhatsApp.",
+    "s4t": "Paiement",
+    "s4p": "Virement Interac ou comptant — aucune carte requise. À Montréal, vous ne payez jamais avant d'avoir vu votre article.",
+    "s5t": "Échanges",
+    "s5p": "14 jours pour échanger, article non porté dans son état d'origine. Écrivez-nous sur WhatsApp et nous nous en occupons."
   }
 }

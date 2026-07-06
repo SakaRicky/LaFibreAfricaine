@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
+import { useConfig } from "../context/ConfigContext.tsx";
 import { useLocale } from "../hooks/useLocale.ts";
 import Emblem from "./Emblem.tsx";
 
+function formatPhone(digits: string): string {
+  const d = digits.replace(/\D/g, "");
+  if (d.length === 11 && d.startsWith("1")) {
+    return `+1 (${d.slice(1, 4)}) ${d.slice(4, 7)}-${d.slice(7)}`;
+  }
+  return `+${d}`;
+}
+
 export default function Footer() {
   const { t } = useLocale();
+  const { whatsappNumber } = useConfig();
+  const phone = whatsappNumber ? formatPhone(whatsappNumber) : null;
 
   return (
     <footer className="bg-forest text-ivory/80">
@@ -40,10 +51,18 @@ export default function Footer() {
             {t("footer.care")}
           </h4>
           <ul className="space-y-2.5 text-sm">
-            <li>{t("footer.careShipping")}</li>
-            <li>{t("footer.careDelivery")}</li>
-            <li>{t("footer.careExchanges")}</li>
-            <li>{t("footer.careWhatsapp")}</li>
+            <li><Link to="/faq" className="transition-colors hover:text-gold">{t("footer.faq")}</Link></li>
+            <li><Link to="/shipping-returns" className="transition-colors hover:text-gold">{t("footer.shippingReturns")}</Link></li>
+            {phone && (
+              <li>
+                <a href={`tel:+${whatsappNumber}`} className="transition-colors hover:text-gold">{phone}</a>
+              </li>
+            )}
+            <li>
+              <a href="mailto:contact@lafibreafricaine.com" className="transition-colors hover:text-gold">
+                contact@lafibreafricaine.com
+              </a>
+            </li>
           </ul>
         </div>
 

@@ -59,7 +59,10 @@
     "crafted": "Crafted in Cameroon",
     "based": "Based in Montréal, QC",
     "rights": "All rights reserved.",
-    "admin": "Admin"
+    "admin": "Admin",
+    "faq": "FAQ",
+    "shippingReturns": "Shipping & Returns",
+    "contact": "Contact"
   },
   "shop": {
     "title": "All Products",
@@ -97,7 +100,10 @@
     "related": "You May Also Love",
     "whatsapp": "Question? Chat with us on WhatsApp",
     "notFound": "Product not found",
-    "backToShop": "Back to Shop"
+    "backToShop": "Back to Shop",
+    "trustPay": "Pay on receipt (Montréal)",
+    "trustNoCard": "No card required",
+    "trustExchange": "14-day exchange"
   },
   "cart": {
     "title": "Your Cart",
@@ -133,7 +139,7 @@
     "postal": "Postal Code",
     "note": "Order Note",
     "notePlaceholder": "Gift note, delivery instructions…",
-    "whatsappInfo": "How it works: place your order, then tap the WhatsApp button to confirm payment and delivery directly with us. We usually reply within a few hours.",
+    "whatsappInfo": "No online payment today — your order is reserved for 48 hours. We confirm payment (Interac or cash at delivery/pickup) and the details together on WhatsApp.",
     "placeOrder": "Place Order",
     "placing": "Placing Order…",
     "yourOrder": "Your Order",
@@ -178,5 +184,48 @@
   "wa": {
     "orderMessage": "Hello La Fibre Africaine! I just placed order {{number}} — total {{total}}.\n{{items}}\nI would like to confirm payment and delivery. Thank you!",
     "productMessage": "Hello La Fibre Africaine! I have a question about \"{{name}}\" — {{url}}"
+  },
+  "how": {
+    "title": "How It Works",
+    "s1Title": "Order online",
+    "s1Text": "Choose your pieces and check out — no card required, no payment today.",
+    "s2Title": "We confirm on WhatsApp",
+    "s2Text": "We validate your order and arrange delivery or pickup together. We usually reply within a few hours.",
+    "s3Title": "Pay on receipt",
+    "s3Text": "Interac or cash — at delivery in Montréal, at pickup in Lachine, or after confirmation for shipping."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything about ordering, paying and receiving your pieces.",
+    "q1": "How do I place an order?",
+    "a1": "Add your pieces to the cart and check out — no card needed. Your order is reserved, and we continue on WhatsApp to confirm everything together.",
+    "q2": "How do I pay?",
+    "a2": "By Interac e-Transfer or cash. In Montréal you pay at delivery or pickup, once the item is in your hands. For shipping elsewhere in Canada, payment is confirmed on WhatsApp before dispatch.",
+    "q3": "Do I pay before receiving my order?",
+    "a3": "Not in Montréal — you inspect your item first. For shipped orders, we send you a photo or video of your exact item being packed before you pay.",
+    "q4": "Do you deliver everywhere in Canada?",
+    "a4": "Yes — $12 flat, free over $100 CAD. In Montréal: hand delivery or free pickup in Lachine.",
+    "q5": "Where do the products come from?",
+    "a5": "Every piece is handcrafted in Cameroon in small batches, then brought to Montréal. Slight variations between pieces are the proof of the artisan's hand.",
+    "q6": "What if the item doesn't suit me?",
+    "a6": "Exchanges within 14 days, item unworn. Just write to us on WhatsApp — it's easy.",
+    "q7": "Which sandal sizes do you carry?",
+    "a7": "EU 36 to 43. Unsure about your size? Ask us on WhatsApp before ordering.",
+    "q8": "How can I reach you?",
+    "a8": "On WhatsApp at +1 (263) 880-7371 or by email at contact@lafibreafricaine.com — we reply within a few hours."
+  },
+  "ship": {
+    "title": "Shipping & Returns",
+    "subtitle": "Clear, simple, and you never pay before being sure.",
+    "s1t": "Delivery in Montréal",
+    "s1p": "We hand-deliver your order and you pay on receipt (Interac or cash), once the item is in your hands.",
+    "s2t": "Pickup in Lachine",
+    "s2p": "Free. We arrange the meeting point on WhatsApp and you pay on the spot, after seeing your pieces.",
+    "s3t": "Shipping across Canada",
+    "s3p": "$12 flat, free over $100 CAD. Orders leave Montréal within 2 business days. Before dispatch, we send you a photo of your exact item being packed, and we share tracking on WhatsApp.",
+    "s4t": "Payment",
+    "s4p": "Interac e-Transfer or cash — no card required. In Montréal, you never pay before seeing your item.",
+    "s5t": "Exchanges",
+    "s5p": "14 days to exchange, item unworn in its original condition. Write to us on WhatsApp and we'll take care of it."
   }
 }

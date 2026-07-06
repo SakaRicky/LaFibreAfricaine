@@ -13,6 +13,8 @@ import About from "./pages/About.tsx";
 import Cart from "./pages/Cart.tsx";
 import Checkout from "./pages/Checkout.tsx";
 import OrderConfirmation from "./pages/OrderConfirmation.tsx";
+import FAQ from "./pages/FAQ.tsx";
+import ShippingReturns from "./pages/ShippingReturns.tsx";
 
 const AdminApp = lazy(() => import("./admin/AdminApp.tsx"));
 
@@ -58,6 +60,8 @@ export default function App() {
                       <Route path="/shop/:collection" element={<Shop />} />
                       <Route path="/product/:slug" element={<Product />} />
                       <Route path="/about" element={<About />} />
+                      <Route path="/faq" element={<FAQ />} />
+                      <Route path="/shipping-returns" element={<ShippingReturns />} />
                       <Route path="/cart" element={<Cart />} />
                       <Route path="/checkout" element={<Checkout />} />
                       <Route path="/order/:orderNumber" element={<OrderConfirmation />} />
