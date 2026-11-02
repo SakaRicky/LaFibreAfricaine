@@ -4,7 +4,11 @@ import { adminApi } from "./api.ts";
 import type { AdminMe } from "./api.ts";
 import Emblem from "../components/Emblem.tsx";
 import Login from "./pages/Login.tsx";
-import Orders from "./pages/Orders.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
+import Sales from "./pages/Sales.tsx";
+import RecordSale from "./pages/RecordSale.tsx";
+import SaleDetail from "./pages/SaleDetail.tsx";
+import Inventory from "./pages/Inventory.tsx";
 import Products from "./pages/Products.tsx";
 import Settings from "./pages/Settings.tsx";
 import Admins from "./pages/Admins.tsx";
@@ -19,7 +23,11 @@ const AdminAuthContext = createContext<AuthCtx>({ me: null, setMe: () => {} });
 export const useAdminAuth = () => useContext(AdminAuthContext);
 
 const NAV = [
-  { to: "/admin/orders", label: "Commandes" },
+  { to: "/admin/dashboard", label: "Tableau de bord" },
+  { to: "/admin/sales/new", label: "+ Enregistrer une vente" },
+  { to: "/admin/inventory", label: "Inventaire" },
+  { to: "/admin/reservations", label: "Réservations Interac" },
+  { to: "/admin/sales", label: "Historique des ventes" },
   { to: "/admin/products", label: "Produits" },
   { to: "/admin/settings", label: "Réglages" },
   { to: "/admin/admins", label: "Administrateurs" },
@@ -66,6 +74,7 @@ function Layout({ children }: { children: React.ReactNode }) {
               <NavLink
                 key={item.to}
                 to={item.to}
+                end={item.to === "/admin/sales"}
                 onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
                   `block px-2 py-2.5 text-[14px] font-medium tracking-wide ${
@@ -100,6 +109,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             <NavLink
               key={item.to}
               to={item.to}
+                end={item.to === "/admin/sales"}
               className={({ isActive }) =>
                 `mb-1 block px-3 py-2.5 text-[13px] font-medium tracking-wide transition-colors ${
                   isActive ? "bg-ivory/10 text-gold" : "text-ivory/80 hover:bg-ivory/5 hover:text-ivory"
@@ -133,7 +143,17 @@ export default function AdminApp() {
   const [me, setMe] = useState<AdminMe | null | undefined>(undefined);
 
   useEffect(() => {
-    adminApi.me().then(setMe).catch(() => setMe(null));
+    const controller = new AbortController();
+    // Strict Mode remounts effects in development. An earlier session check
+    // must never overwrite a newer login with its stale unauthenticated result.
+    adminApi.me(controller.signal)
+      .then((admin) => {
+        if (!controller.signal.aborted) setMe(admin);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setMe(null);
+      });
+    return () => controller.abort();
   }, []);
 
   if (me === undefined) {
@@ -143,13 +163,20 @@ export default function AdminApp() {
   return (
     <AdminAuthContext.Provider value={{ me, setMe: setMe as AuthCtx["setMe"] }}>
       <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="orders" element={<Guard><Orders /></Guard>} />
+        <Route path="login" element={me ? <Navigate to="/admin/dashboard" replace /> : <Login />} />
+        <Route path="dashboard" element={<Guard><Dashboard /></Guard>} />
+        <Route path="sales" element={<Guard><Sales key="sales" /></Guard>} />
+        <Route path="sales/new" element={<Guard><RecordSale key="new" /></Guard>} />
+        <Route path="sales/:id" element={<Guard><SaleDetail /></Guard>} />
+        <Route path="sales/:id/edit" element={<Guard><RecordSale key="edit" /></Guard>} />
+        <Route path="inventory" element={<Guard><Inventory /></Guard>} />
+        <Route path="reservations" element={<Guard><Sales key="reservations" reservations /></Guard>} />
+        <Route path="orders" element={<Navigate to="/admin/sales" replace />} />
         <Route path="products" element={<Guard><Products /></Guard>} />
         <Route path="settings" element={<Guard><Settings /></Guard>} />
         <Route path="admins" element={<Guard><Admins /></Guard>} />
         <Route path="account" element={<Guard><Account /></Guard>} />
-        <Route path="*" element={<Navigate to="/admin/orders" replace />} />
+        <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
       </Routes>
     </AdminAuthContext.Provider>
   );

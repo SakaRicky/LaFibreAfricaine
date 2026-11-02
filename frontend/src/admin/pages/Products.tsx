@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import type { FormEvent } from "react";
 import { adminApi, cad } from "../api.ts";
 import type { AdminProduct } from "../api.ts";
@@ -26,11 +27,9 @@ function ProductEditor({
   onSaved: (p: AdminProduct) => void;
 }) {
   const [form, setForm] = useState({ ...product });
-  const [sizes, setSizes] = useState(product.sizes.map((s) => ({ ...s })));
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-  const hasSizes = product.sizes.length > 0;
 
   const set = (field: keyof AdminProduct) => (e: { target: { value: string } }) =>
     setForm((f) => ({ ...f, [field]: e.target.value }));
@@ -39,15 +38,9 @@ function ProductEditor({
     setBusy(true);
     setMsg(null);
     try {
-      let stock = Number(form.stock) || 0;
-      if (hasSizes) {
-        await adminApi.updateSizes(product.id, sizes.map((s) => ({ size: s.size, stock: Number(s.stock) || 0 })));
-        stock = sizes.reduce((n, s) => n + (Number(s.stock) || 0), 0);
-      }
       const updated = await adminApi.updateProduct(product.id, {
         name: form.name,
         priceCents: Number(form.priceCents) || 0,
-        stock,
         featured: form.featured,
         archived: form.archived,
         descriptionEn: form.descriptionEn,
@@ -101,20 +94,13 @@ function ProductEditor({
           <input className="field" value={form.name} onChange={set("name")} />
         </Field>
         <div className="grid grid-cols-2 gap-4">
-          <Field label="Prix (cents CAD)">
+          <Field label="Prix ($ CAD)">
             <input
-              type="number" min={0} className="field" value={form.priceCents}
-              onChange={(e) => setForm((f) => ({ ...f, priceCents: Number(e.target.value) }))}
+              type="number" min={0} step="0.01" className="field" value={form.priceCents / 100}
+              onChange={(e) => setForm((f) => ({ ...f, priceCents: Math.round(Number(e.target.value) * 100) }))}
             />
           </Field>
-          {!hasSizes && (
-            <Field label="Stock">
-              <input
-                type="number" min={0} className="field" value={form.stock}
-                onChange={(e) => setForm((f) => ({ ...f, stock: Number(e.target.value) }))}
-              />
-            </Field>
-          )}
+
         </div>
         <Field label="Couleur (FR)">
           <input className="field" value={form.colorFr} onChange={set("colorFr")} />
@@ -130,28 +116,7 @@ function ProductEditor({
         </Field>
       </div>
 
-      {hasSizes && (
-        <div className="mt-5">
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-forest">
-            Stock par pointure (le stock total est calculé automatiquement)
-          </p>
-          <div className="flex flex-wrap gap-3">
-            {sizes.map((s, i) => (
-              <label key={s.size} className="text-center">
-                <span className="block text-[11px] text-charcoal/60">{s.size}</span>
-                <input
-                  type="number" min={0}
-                  className="mt-1 w-16 border border-charcoal/20 bg-white px-2 py-1.5 text-center text-sm outline-none focus:border-gold"
-                  value={s.stock}
-                  onChange={(e) =>
-                    setSizes((prev) => prev.map((x, j) => (j === i ? { ...x, stock: Number(e.target.value) } : x)))
-                  }
-                />
-              </label>
-            ))}
-          </div>
-        </div>
-      )}
+      <Link to={`/admin/inventory?product=${product.id}`} className="admin-secondary mt-5">Gérer les quantités par taille / couleur</Link>
 
       <div className="mt-5">
         <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-forest">Photos</p>

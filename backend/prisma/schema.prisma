@@ -44,6 +44,7 @@ model Product {
   images         ProductImage[]
   sizes          ProductSize[]
   orderItems     OrderItem[]
+  movements      StockMovement[]
 
   @@index([collectionId])
   @@map("products")
@@ -67,6 +68,7 @@ model ProductSize {
   productId Int     @map("product_id")
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   size      String
+  color     String  @default("")
   stock     Int     @default(0)
 
   @@unique([productId, size])
@@ -92,6 +94,25 @@ model Order {
   status        String      @default("pending_whatsapp")
   createdAt     DateTime    @default(now()) @map("created_at")
   items         OrderItem[]
+  paymentMethod String      @default("interac") @map("payment_method")
+  paymentStatus String      @default("awaiting") @map("payment_status")
+  fulfillment   String      @default("awaiting_delivery")
+  lifecycle     String      @default("active")
+  discountCents Int         @default(0) @map("discount_cents")
+  refundedCents Int         @default(0) @map("refunded_cents")
+  salespersonId Int?       @map("salesperson_id")
+  salesperson   AdminUser? @relation(fields: [salespersonId], references: [id])
+  salespersonName String   @default("Boutique en ligne") @map("salesperson_name")
+  paymentConfirmedAt DateTime? @map("payment_confirmed_at")
+  paymentConfirmedBy Int?  @map("payment_confirmed_by")
+  requestKey    String?     @unique @map("request_key")
+  version       Int         @default(0)
+  updatedAt     DateTime    @default(now()) @updatedAt @map("updated_at")
+  events        OrderEvent[]
+  movements     StockMovement[]
+
+  @@index([createdAt])
+  @@index([paymentStatus, lifecycle])
 
   @@map("orders")
 }
@@ -107,6 +128,7 @@ model OrderItem {
   personalization String?
   quantity        Int
   unitPriceCents  Int     @map("unit_price_cents")
+  returnedQuantity Int   @default(0) @map("returned_quantity")
 
   @@map("order_items")
 }
@@ -126,6 +148,8 @@ model AdminUser {
   passwordHash String   @map("password_hash")
   createdAt    DateTime @default(now()) @map("created_at")
 
+  sales        Order[]
+
   @@map("admin_users")
 }
 
@@ -134,4 +158,36 @@ model Setting {
   value String @default("")
 
   @@map("settings")
+}
+
+model OrderEvent {
+  id        Int      @id @default(autoincrement())
+  orderId   Int      @map("order_id")
+  order     Order    @relation(fields: [orderId], references: [id])
+  adminId   Int?     @map("admin_id")
+  actor     String
+  action    String
+  reason    String   @default("")
+  detail    Json
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([orderId, createdAt])
+  @@map("order_events")
+}
+
+model StockMovement {
+  id        Int      @id @default(autoincrement())
+  productId Int      @map("product_id")
+  product   Product  @relation(fields: [productId], references: [id])
+  size      String?
+  delta     Int
+  reason    String
+  adminId   Int?     @map("admin_id")
+  actor     String
+  orderId   Int?     @map("order_id")
+  order     Order?   @relation(fields: [orderId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([productId, createdAt])
+  @@map("stock_movements")
 }

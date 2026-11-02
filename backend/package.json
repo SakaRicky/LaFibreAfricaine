@@ -14,8 +14,12 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma db push --force-reset && tsx prisma/seed.ts",
     "prisma:generate": "prisma generate",
-    "start:prod": "prisma db push --skip-generate && NODE_ENV=production SERVE_STATIC=../frontend/dist tsx src/server.ts",
-    "media:cloudinary": "tsx scripts/upload-media.ts"
+    "start:prod": "tsx scripts/apply-inventory-schema.ts && prisma db push --skip-generate && tsx scripts/upgrade-inventory.ts && NODE_ENV=production SERVE_STATIC=../frontend/dist tsx src/server.ts",
+    "media:cloudinary": "tsx scripts/upload-media.ts",
+    "inventory:upgrade": "tsx scripts/upgrade-inventory.ts",
+    "test": "node --import tsx scripts/test-inventory.ts",
+    "inventory:schema": "tsx scripts/apply-inventory-schema.ts",
+    "test:security": "node --import tsx --test tests/security.test.ts"
   },
   "license": "UNLICENSED",
   "private": true,

@@ -13,11 +13,13 @@
     "menu": "Menu"
   },
   "hero": {
-    "eyebrow": "Portez vos racines",
-    "title": "Avec Élégance",
-    "sub": "Sacs, sandales et ensembles assortis d'inspiration africaine — faits main au Cameroun avec culture, qualité et amour.",
-    "ctaShop": "Découvrir les nouveautés",
-    "ctaStory": "Notre histoire"
+    "eyebrow": "L’héritage en mouvement",
+    "title": "Portez vos racines avec élégance.",
+    "sub": "Sacs, sandales et ensembles faits main au Cameroun.",
+    "ctaShop": "Découvrir la collection",
+    "ctaStory": "Notre histoire",
+    "titleLine1": "Portez vos racines",
+    "titleLine2": "avec élégance."
   },
   "values": {
     "sourced": "Sourcé avec éthique",

@@ -78,3 +78,19 @@ Service web → **Settings** → **Networking** → **Custom Domain** → `lafib
 - Sans variables SMTP, le site fonctionne quand même — les courriels sont simplement ignorés (visibles dans les logs).
 - `railway logs` pour voir les commandes reçues / erreurs.
 - Le tableau de bord admin est sur `/admin`.
+
+## Protection de connexion et erreurs
+
+`POST /api/admin/login` accepte 10 tentatives par adresse IP sur 15 minutes,
+puis répond `429` avec `Retry-After`. Le compteur est en mémoire par processus :
+un redémarrage le remet à zéro. Pour plusieurs instances, utiliser un stockage
+partagé ou une limite au niveau du proxy. Les utilisateurs d’un même réseau
+partagent cette limite.
+
+En production, Express fait confiance à un seul proxy (Railway). Conserver
+l’accès au service derrière ce proxy ; adapter cette configuration si la
+ topologie change. En développement, les en-têtes de proxy ne sont pas fiables.
+
+Les erreurs serveur (5xx) renvoient un message générique en production ; les
+détails restent dans les logs serveur. Les erreurs de validation (4xx) restent
+lisibles. Vérification : `npm run test:security --prefix backend`.

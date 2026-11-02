@@ -12,8 +12,10 @@ import {
   requireAdmin, signAdminToken, setAdminCookie, clearAdminCookie,
 } from "../middleware/auth.js";
 import type { AdminRequest } from "../middleware/auth.js";
-import { sendPaidThankYou, sendShippedNotice } from "../mail.js";
+import commerceRouter from "./commerce.js";
 import { cloudinary, cloudinaryReady, uploadBuffer, deliveryUrl } from "../cloudinary.js";
+
+import { createLoginLimiter } from "../middleware/login-limit.js";
 
 const router = Router();
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -28,7 +30,7 @@ const SETTING_KEYS = ["alert_email", "whatsapp_number", "pickup_note_fr", "picku
 
 // ——— Auth ———
 
-router.post("/login", async (req, res, next) => {
+router.post("/login", createLoginLimiter(), async (req, res, next) => {
   try {
     const email = String(req.body?.email ?? "").trim().toLowerCase();
     const password = String(req.body?.password ?? "");
@@ -47,6 +49,7 @@ router.post("/logout", (_req, res) => {
 });
 
 router.use(requireAdmin);
+router.use(commerceRouter);
 
 router.get("/me", async (req: AdminRequest, res, next) => {
   try {
@@ -119,20 +122,9 @@ router.get("/orders", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.patch("/orders/:id/status", async (req, res, next) => {
-  try {
-    const status = String(req.body?.status ?? "");
-    if (!ORDER_STATUSES.includes(status)) return res.status(400).json({ error: "Statut invalide" });
-    const order = await prisma.order.update({
-      where: { id: Number(req.params.id) },
-      data: { status },
-      include: { items: true },
-    });
-    // Customer emails on key transitions (fire-and-forget)
-    if (status === "paid") void sendPaidThankYou(order);
-    if (status === "shipped") void sendShippedNotice(order);
-    res.json(order);
-  } catch (err) { next(err); }
+// Legacy writes are disabled so payment confirmation and stock cannot be bypassed.
+router.patch("/orders/:id/status", (_req, res) => {
+  res.status(409).json({ error: "Utilisez la page Ventes pour confirmer un paiement ou modifier une commande." });
 });
 
 // ——— Products ———
@@ -152,7 +144,7 @@ router.get("/products", async (_req, res, next) => {
 });
 
 const EDITABLE_FIELDS = [
-  "name", "priceCents", "stock", "featured", "archived", "isSet",
+  "name", "priceCents", "featured", "archived", "isSet",
   "descriptionEn", "descriptionFr", "storyEn", "storyFr",
   "materialsEn", "materialsFr", "colorEn", "colorFr",
 ] as const;
@@ -185,10 +177,11 @@ router.post("/products", async (req, res, next) => {
 
 router.patch("/products/:id", async (req, res, next) => {
   try {
+    if (req.body?.stock !== undefined) return res.status(400).json({ error: "Utilisez un mouvement de stock dans Inventaire." });
     const data: Record<string, unknown> = {};
     for (const field of EDITABLE_FIELDS) {
       if (req.body?.[field] !== undefined) {
-        if (field === "priceCents" || field === "stock") {
+        if (field === "priceCents") {
           data[field] = Math.max(0, Math.round(Number(req.body[field]) || 0));
         } else if (field === "featured" || field === "archived" || field === "isSet") {
           data[field] = Boolean(req.body[field]);
@@ -207,20 +200,8 @@ router.patch("/products/:id", async (req, res, next) => {
 });
 
 // Bulk per-size stock update: { sizes: [{size, stock}] }
-router.patch("/products/:id/sizes", async (req, res, next) => {
-  try {
-    const productId = Number(req.params.id);
-    const sizes = (req.body?.sizes ?? []) as { size: string; stock: number }[];
-    for (const s of sizes) {
-      await prisma.productSize.upsert({
-        where: { productId_size: { productId, size: String(s.size) } },
-        update: { stock: Math.max(0, Math.round(Number(s.stock) || 0)) },
-        create: { productId, size: String(s.size), stock: Math.max(0, Math.round(Number(s.stock) || 0)) },
-      });
-    }
-    const rows = await prisma.productSize.findMany({ where: { productId }, orderBy: { size: "asc" } });
-    res.json(rows);
-  } catch (err) { next(err); }
+router.patch("/products/:id/sizes", (_req, res) => {
+  res.status(409).json({ error: "Utilisez Inventaire pour ajouter des tailles / couleurs et enregistrer les mouvements de stock." });
 });
 
 // Photo upload — resized with sharp, then sent to Cloudinary (CDN, f_auto/q_auto).

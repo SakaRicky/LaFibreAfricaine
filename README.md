@@ -14,9 +14,9 @@ handcrafted in Cameroon and shipped across Canada.
 | ORM      | Prisma 6                                                           |
 | Database | PostgreSQL 16 (project-local cluster in `database/pgdata`, port **5433**) |
 | Media    | **Cloudinary CDN** — catalog + admin uploads, auto WebP/AVIF (`f_auto,q_auto`); local-disk fallback when unset |
-| Payment  | **V1: WhatsApp** — orders are reserved in the DB, then finalized in a WhatsApp chat with the admin |
+| Payment  | **Cash + Interac** — shared stock reservations and manual receipt confirmation; no gateway |
 | Admin    | French dashboard at **/admin** — orders, products, stock, photos, settings, multi-admin |
-| Emails   | Customer confirmation / paid thank-you (-10% code) / shipped notice + admin alerts (SMTP via env; skipped gracefully if unset) |
+| Emails   | Storefront order confirmation + admin alerts (SMTP via env; skipped gracefully if unset) |
 
 ## Project layout
 
@@ -32,7 +32,7 @@ database/     Project-owned Postgres 16 data directory (port 5433, user "lafibre
 Dashboard: `http://localhost:5173/admin` (or `/admin` in production)
 Seeded account: `sakaricky91@gmail.com` / `LaFibre-2026!` — **change it immediately** in « Mon compte ».
 
-All live settings (WhatsApp number, alert email, pickup note, promo code) are managed in **Réglages** — no redeploy needed. All stock is seeded at **zero**: enter real inventory in **Produits**.
+All live settings (WhatsApp number, alert email, pickup note, promo code) are managed in **Réglages** — no redeploy needed. All stock is seeded at **zero**: record receipts in **Inventaire**.
 
 ## Running the app
 
@@ -106,3 +106,72 @@ See **DEPLOY.md** (Railway single-service + Postgres + volume for photo uploads,
 2. Real product photo session (phone photography guide agreed)
 3. Resend for emails once the domain exists
 4. Stripe online payment (V2)
+
+## Shared inventory and in-person sales
+
+Open `/admin` and sign in with an existing admin account. The mobile menu and
+sidebar provide **Tableau de bord**, **Enregistrer une vente**, **Inventaire**,
+**Réservations Interac**, and **Historique des ventes**. Product names, prices and
+photos remain under **Produits**. Prices in the product editor are entered in CAD,
+not cents.
+
+- Cash sales require confirmation that cash was received. Interac sales remain
+  reservations until an admin explicitly confirms receipt in their bank account.
+- `Product.stock` and each size/colour's stock mean **available**, not physical
+  stock. Reservations immediately remove availability across both storefront and
+  admin sales. Confirmation never deducts twice. There is no automatic expiry.
+- Inventory changes are signed quantity movements with an admin, timestamp and
+  reason. Variant labels combine size and colour (for example `M · Rouge`), and
+  the storefront uses the same variants. Stock cannot be overwritten through the
+  old product or size endpoints.
+- Cancellations restore stock once. Paid cancellations require a manual refund
+  confirmation. Items already handed over use returns; each returned item can be
+  restocked or marked unsuitable for resale. Refunds account for discounts and
+  partial returns; delivery charges are retained on returns. The app never moves
+  money. Returns and changes are recorded in an audit journal.
+- Corrections release and reallocate stock atomically, retain the
+  original snapshot, and use current catalog prices. Paid corrections require
+  confirmation of any amount collected/refunded. After a return, use a new sale
+  for replacements rather than editing the original transaction.
+- Customer information is optional for admin sales. The logged-in admin and date
+  are recorded automatically. Payment and fulfilment statuses are independent.
+- History supports date (inclusive local calendar dates), product, payment and
+  salesperson filters. CSV export applies those same filters and protects text
+  cells against spreadsheet formula injection. One CSV row represents one sale
+  line; order totals repeat for multi-item sales.
+
+### Upgrade an existing local database
+
+Use Node 22+, start PostgreSQL, then run from the project root:
+
+```bash
+npm run prisma:generate --prefix backend
+npm run inventory:schema --prefix backend
+npm run inventory:upgrade --prefix backend
+npm run db:push --prefix backend
+```
+
+The reviewed SQL in `backend/prisma/inventory-upgrade.sql` only adds columns,
+tables and indexes. The schema runner applies it once in a transaction. The data
+upgrade keeps existing orders and their statuses, labels historical paid methods
+as unknown (`legacy`), and synchronizes aggregate product quantities with their
+existing size quantities. It does not infer a new Interac receipt or release
+historically cancelled stock. The upgrade writes a one-time marker and any total
+synchronization to the movement ledger. Production startup runs the same upgrade
+before starting the API. Set a random `JWT_SECRET` of at least 32 characters in
+production; authenticated sessions for deleted admins are rejected.
+
+### Verify inventory rules
+
+```bash
+npm test --prefix backend
+npm run typecheck --prefix backend
+npm run typecheck --prefix frontend
+npm run build --prefix frontend
+```
+
+The integration test runner creates and removes an isolated PostgreSQL schema;
+it never resets the live catalog. It tests concurrent last-item reservations,
+idempotent sale creation, cash and manual Interac confirmation, cancellation,
+partial returns, corrections, stock adjustments, storefront/admin sharing,
+authentication, filters and CSV export.

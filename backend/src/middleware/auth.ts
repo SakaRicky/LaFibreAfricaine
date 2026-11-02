@@ -1,6 +1,10 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { prisma } from "../prisma.js";
 
+if (process.env.NODE_ENV === "production" && (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32)) {
+  throw new Error("JWT_SECRET must contain at least 32 characters in production");
+}
 const SECRET = process.env.JWT_SECRET ?? "lfa-dev-secret-change-in-prod";
 const COOKIE = "lfa_admin";
 
@@ -25,12 +29,13 @@ export function clearAdminCookie(res: Response): void {
   res.clearCookie(COOKIE);
 }
 
-export function requireAdmin(req: AdminRequest, res: Response, next: NextFunction): void {
+export async function requireAdmin(req: AdminRequest, res: Response, next: NextFunction): Promise<void> {
   try {
     const token = (req as Request & { cookies?: Record<string, string> }).cookies?.[COOKIE];
     if (!token) throw new Error("no token");
     const payload = jwt.verify(token, SECRET) as { sub: string };
     req.adminId = Number(payload.sub);
+    if (!Number.isSafeInteger(req.adminId) || !await prisma.adminUser.findUnique({ where: { id: req.adminId } })) throw new Error("unknown admin");
     next();
   } catch {
     res.status(401).json({ error: "Unauthorized" });

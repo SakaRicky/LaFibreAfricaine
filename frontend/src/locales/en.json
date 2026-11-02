@@ -13,11 +13,13 @@
     "menu": "Menu"
   },
   "hero": {
-    "eyebrow": "Wear Your Roots",
-    "title": "With Elegance",
-    "sub": "African-inspired bags, sandals and matching sets — handcrafted in Cameroon with culture, quality and love.",
-    "ctaShop": "Shop New Arrivals",
-    "ctaStory": "Discover Our Story"
+    "eyebrow": "Heritage in motion",
+    "title": "Wear your roots with elegance.",
+    "sub": "Bags, sandals and matching sets handmade in Cameroon.",
+    "ctaShop": "Discover the collection",
+    "ctaStory": "Our story",
+    "titleLine1": "Wear your roots",
+    "titleLine2": "with elegance."
   },
   "values": {
     "sourced": "Ethically Sourced",

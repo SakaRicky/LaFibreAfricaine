@@ -29,7 +29,7 @@ export interface AdminOrder {
 
 export type AdminSettings = Record<string, string>;
 
-async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+export async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const res = await fetch(path, {
     headers: options.body instanceof FormData ? {} : { "Content-Type": "application/json" },
     credentials: "same-origin",
@@ -44,7 +44,7 @@ export const adminApi = {
   login: (email: string, password: string) =>
     request<AdminMe>("/api/admin/login", { method: "POST", body: JSON.stringify({ email, password }) }),
   logout: () => request<{ ok: boolean }>("/api/admin/logout", { method: "POST" }),
-  me: () => request<AdminMe>("/api/admin/me"),
+  me: (signal?: AbortSignal) => request<AdminMe>("/api/admin/me", { signal }),
   updateMe: (payload: { currentPassword: string; email?: string; name?: string; newPassword?: string }) =>
     request<AdminMe>("/api/admin/me", { method: "PATCH", body: JSON.stringify(payload) }),
 

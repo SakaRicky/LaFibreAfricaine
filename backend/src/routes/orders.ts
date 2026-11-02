@@ -1,4 +1,7 @@
 import { Router } from "express";
+import { randomUUID } from "node:crypto";
+import { moveStock, onlineActor, integer } from "../services/stock.js";
+import { event } from "../services/sales.js";
 import { prisma } from "../prisma.js";
 import { sendOrderConfirmation, sendAdminAlert } from "../mail.js";
 
@@ -52,7 +55,7 @@ router.post("/", async (req, res, next) => {
         throw new HttpError(400, `Missing customer field: ${field}`);
       }
     }
-    if (!Array.isArray(items) || items.length === 0) {
+    if (!Array.isArray(items) || items.length === 0 || items.length > 100) {
       throw new HttpError(400, "Cart is empty");
     }
 
@@ -67,29 +70,14 @@ router.post("/", async (req, res, next) => {
         unitPriceCents: number;
       }[] = [];
 
-      for (const item of items) {
-        const qty = Math.max(1, Math.floor(Number(item.quantity) || 1));
+      const catalog = await tx.product.findMany({ where: { slug: { in: items.map(i => String(i.slug)) } } });
+      const productIds = new Map(catalog.map(p => [p.slug,p.id]));
+      for (const item of [...items].sort((a,b) => (productIds.get(a.slug) ?? 0) - (productIds.get(b.slug) ?? 0))) {
+        const qty = integer(item.quantity, "Quantité", 1, 10000);
         const product = await tx.product.findUnique({ where: { slug: item.slug } });
-        if (!product) throw new HttpError(400, `Unknown product: ${item.slug}`);
+        if (!product || product.archived) throw new HttpError(400, `Unknown product: ${item.slug}`);
 
-        // Atomic conditional decrement — fails cleanly if stock is insufficient.
-        const decremented = await tx.product.updateMany({
-          where: { id: product.id, stock: { gte: qty } },
-          data: { stock: { decrement: qty } },
-        });
-        if (decremented.count === 0) {
-          throw new HttpError(409, `Only ${product.stock} left of ${product.name}`);
-        }
-
-        if (item.size) {
-          const sizeDecremented = await tx.productSize.updateMany({
-            where: { productId: product.id, size: String(item.size), stock: { gte: qty } },
-            data: { stock: { decrement: qty } },
-          });
-          if (sizeDecremented.count === 0) {
-            throw new HttpError(409, `Size ${item.size} of ${product.name} is sold out`);
-          }
-        }
+        await moveStock(tx, product.id, item.size ? String(item.size) : null, -qty, "Réservation boutique", onlineActor);
 
         subtotal += product.priceCents * qty;
         lines.push({
@@ -105,9 +93,9 @@ router.post("/", async (req, res, next) => {
       const shipping =
         deliveryMethod === "pickup" ? 0 :
         subtotal >= FREE_SHIPPING_THRESHOLD_CENTS ? 0 : FLAT_SHIPPING_CENTS;
-      const orderNumber = `LFA-${Date.now().toString().slice(-6)}${Math.floor(Math.random() * 10)}`;
+      const orderNumber = `LFA-${randomUUID().slice(0, 8).toUpperCase()}`;
 
-      return tx.order.create({
+      const created = await tx.order.create({
         data: {
           orderNumber,
           customerName: customer.name!.trim(),
@@ -119,6 +107,9 @@ router.post("/", async (req, res, next) => {
           postalCode: customer.postal_code?.trim() ?? "",
           note: customer.note?.trim() ?? "",
           deliveryMethod,
+          fulfillment: deliveryMethod === "pickup" ? "awaiting_pickup" : "awaiting_delivery",
+          paymentMethod: "interac",
+          paymentStatus: "awaiting",
           lang,
           subtotalCents: subtotal,
           shippingCents: shipping,
@@ -127,6 +118,8 @@ router.post("/", async (req, res, next) => {
         },
         include: { items: true },
       });
+      await event(tx, created.id, onlineActor, "created", "Réservation boutique", { totalCents: created.totalCents });
+      return created;
     });
 
     // Customer confirmation + admin alert (fire-and-forget)

@@ -20,7 +20,7 @@ export default function Login() {
     try {
       const me = await adminApi.login(email, password);
       setMe(me);
-      navigate("/admin/orders");
+      navigate("/admin/dashboard", { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erreur");
       setBusy(false);
@@ -43,7 +43,7 @@ export default function Login() {
           <span className="mb-1.5 block text-[12px] font-semibold uppercase tracking-[0.16em] text-forest">Mot de passe</span>
           <input type="password" required className="field" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
         </label>
-        {error && <p className="mt-3 text-sm text-terracotta">{error}</p>}
+        {error && <p role="alert" className="mt-3 text-sm text-terracotta">{error}</p>}
         <button type="submit" disabled={busy} className="btn-primary mt-6 w-full disabled:opacity-50">
           {busy ? "Connexion…" : "Se connecter"}
         </button>

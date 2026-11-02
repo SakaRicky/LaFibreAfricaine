@@ -29,34 +29,39 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative min-h-[560px] overflow-hidden lg:min-h-[680px]">
-        <img
-          src="/brand/homepage_hero.webp"
-          alt=""
-          className="hero-img absolute inset-0 h-full w-full object-cover object-[70%_center]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/75 via-charcoal/35 to-transparent" />
-        <div className="relative mx-auto flex min-h-[560px] max-w-7xl items-center px-6 lg:min-h-[680px]">
-          <div className="max-w-xl py-24">
+      <section className="grid overflow-hidden bg-[#f5f0e6] lg:min-h-[680px] lg:grid-cols-[44%_56%]">
+        <div className="relative flex items-center px-6 py-16 sm:px-12 sm:py-20 lg:py-24 lg:pl-[5vw] lg:pr-6">
+          <div className="hero-copy w-full">
             <Reveal>
-              <div className="mb-4 h-px w-14 bg-gold" />
-              <p className="eyebrow">{t("hero.eyebrow")}</p>
+              <p className="hero-eyebrow font-medium uppercase text-forest/75">{t("hero.eyebrow")}</p>
+              <div className="mt-5 h-[2px] w-14 bg-terracotta" />
             </Reveal>
             <Reveal delay={120}>
-              <h1 className="mt-3 font-display text-6xl font-semibold leading-[1.02] text-ivory sm:text-7xl">
-                {t("hero.title")}
+              <h1 className="hero-title mt-7 text-forest">
+                <span className="block">{t("hero.titleLine1")}</span>
+                <span className="block">{t("hero.titleLine2")}</span>
               </h1>
             </Reveal>
             <Reveal delay={240}>
-              <p className="mt-6 max-w-md text-[15px] leading-relaxed text-ivory/85">{t("hero.sub")}</p>
+              <p className="hero-sub mt-6 leading-relaxed text-forest/75">{t("hero.sub")}</p>
             </Reveal>
             <Reveal delay={360}>
-              <div className="mt-9 flex flex-wrap gap-4">
-                <Link to="/shop" className="btn-gold">{t("hero.ctaShop")}</Link>
-                <Link to="/about" className="btn-outline-light">{t("hero.ctaStory")}</Link>
+              <div className="mt-9 flex flex-col items-start gap-5">
+                <Link to="/shop" className="hero-cta inline-flex items-center justify-center gap-6 bg-forest px-8 py-4 text-ivory transition-colors hover:bg-forest-light">
+                  {t("hero.ctaShop")}
+                  <span aria-hidden="true" className="text-xl">→</span>
+                </Link>
+                <Link to="/about" className="hero-story text-forest/80 underline decoration-forest/40 underline-offset-8 transition-colors hover:text-forest">{t("hero.ctaStory")}</Link>
               </div>
             </Reveal>
           </div>
+        </div>
+        <div className="relative min-h-[360px] overflow-hidden sm:min-h-[480px] lg:min-h-[680px]">
+          <img
+            src="/brand/homepage_hero.webp"
+            alt=""
+            className="hero-img absolute inset-0 h-full w-full object-cover object-[75%_center]"
+          />
         </div>
       </section>
 
