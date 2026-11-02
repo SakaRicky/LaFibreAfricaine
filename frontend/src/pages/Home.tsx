@@ -58,7 +58,7 @@ export default function Home() {
         </div>
         <div className="relative min-h-[360px] overflow-hidden sm:min-h-[480px] lg:min-h-[680px]">
           <img
-            src="/brand/homepage_hero.webp"
+            src="/brand/woven-tote-orange-geometric-hero.png"
             alt=""
             className="hero-img absolute inset-0 h-full w-full object-cover object-[75%_center]"
           />
