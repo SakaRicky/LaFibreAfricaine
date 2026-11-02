@@ -15,7 +15,7 @@ export default function ProductCard({ product }: { product: Product }) {
               src={primary.url}
               alt={primary.alt || product.name}
               loading="lazy"
-              className={`h-full w-full object-cover transition-all duration-700 group-hover:scale-[1.04] ${
+              className={`h-full w-full object-contain transition-all duration-700 ${
                 secondary ? "group-hover:opacity-0" : ""
               }`}
             />
@@ -25,7 +25,7 @@ export default function ProductCard({ product }: { product: Product }) {
               src={secondary.url}
               alt={secondary.alt || product.name}
               loading="lazy"
-              className="absolute inset-0 h-full w-full scale-[1.04] object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+              className="absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-700 group-hover:opacity-100"
             />
           )}
         </div>

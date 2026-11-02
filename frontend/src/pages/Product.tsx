@@ -28,7 +28,7 @@ function ZoomImage({ src, alt }: { src: string; alt: string }) {
         src={src}
         alt={alt}
         style={{ transformOrigin: origin, transform: zoom ? "scale(2)" : "scale(1)" }}
-        className="h-full w-full object-cover transition-transform duration-300"
+        className="h-full w-full object-contain transition-transform duration-300"
       />
     </div>
   );
@@ -155,20 +155,21 @@ export default function Product() {
         {/* Gallery */}
         <div>
           <ZoomImage
+            key={product.images[imageIdx]?.url}
             src={product.images[imageIdx]?.url ?? ""}
             alt={product.images[imageIdx]?.alt || product.name}
           />
           {product.images.length > 1 && (
-            <div className="mt-3 flex gap-3">
+            <div className="mt-3 flex gap-3 overflow-x-auto pb-1">
               {product.images.map((img, i) => (
                 <button
                   key={img.url}
                   onClick={() => setImageIdx(i)}
-                  className={`h-20 w-16 overflow-hidden border-2 transition-colors ${
+                  className={`h-20 w-16 shrink-0 overflow-hidden border-2 transition-colors ${
                     i === imageIdx ? "border-gold" : "border-transparent hover:border-gold/40"
                   }`}
                 >
-                  <img src={img.url} alt="" className="h-full w-full object-cover" />
+                  <img src={img.url} alt="" className="h-full w-full object-contain" />
                 </button>
               ))}
             </div>
